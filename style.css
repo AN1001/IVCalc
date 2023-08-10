@@ -1,0 +1,395 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
+:root{
+  --col3: #3d3d4d;
+  --col2: #34343c;
+  --col1: #1c1c1c;
+  --colBorder: #4d4d58;
+  
+  font-family: 'Rubik', sans-serif;
+}
+
+body{
+  background: var(--col1);
+}
+
+#logo{
+  width: 10px;
+  height: 10px;
+}
+
+#logo-svg{
+  filter: invert(100%);
+}
+
+#top-bar{
+  display: flex;
+  align-items: center;
+  font-size: 1.1em;
+  color: #FFF; 
+  margin-left: 10px;
+}
+
+#main{
+  width: 100%;
+  display: flex;
+}
+
+#sidebar {
+  color: #fff;
+  max-height: calc(100vh - 125px);
+  overflow-y: auto;
+  padding: 0 0 1.25rem 10px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  width: 250px;
+  border-radius: 0.5em;
+}
+
+.sidebar-title {
+  color: #f5f5f5;
+  font-size: 1.1rem;
+  letter-spacing: .5px;
+  margin: 0 0 0.7rem 8px;
+  padding: 0 0 1rem 0;
+}
+
+.sidebar-section{
+  background: #2c2c34;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  padding-bottom: 10px;
+}
+
+.sidebar-section-top{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.infoBtn{
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  background: none;
+  filter: invert(35%);
+  margin-right: 15px;
+  border-radius: 50%;
+}
+
+.infoBtn:hover{
+  filter: invert(50%);
+}
+
+.sidebar-section-header{
+  align-items: center;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  font-size: 1.1rem;
+  font-weight: 500;
+  height: 100%;
+  outline: none;
+  padding: 3px 0 0 .4125rem;
+  position: relative;
+  -webkit-user-select: none;
+  user-select: none;
+  z-index: 10;
+  margin: 7px;
+  margin-bottom: 10px;
+  color: #FFF;
+}
+
+.mini-header{
+  align-items: center;
+  background: transparent;
+  border: 0;
+  display: flex;
+  font-size: 10px;
+  outline: none;
+  padding: 3px 0 0 .4125rem;
+  position: relative;
+  -webkit-user-select: none;
+  user-select: none;
+  z-index: 10;
+  margin: 7px;
+  margin-bottom: 3px;
+  color: #d3d3eb;
+}
+
+.input {
+  border: 1px solid var(--colBorder);
+  padding: 5px;
+  border-radius: 5px;
+  display: inline-block;
+  font-size: 1rem;
+  position: relative;
+  white-space: nowrap;
+  margin: 0 10px 0 10px;
+  
+  background: #373742;
+  border-radius: 6px;
+}
+
+.input-prefix{
+  margin-left: 5px;
+}
+
+.inner-input{
+  width: 100px;
+  background: none;
+  border: 0;
+  color: #e3e3e3;
+  font-size: .9375em;
+  max-width: 100%;
+  outline: none;
+  padding: .21em .3em;
+  position: relative;
+}
+
+.tickbox{
+  display: flex;
+}
+
+.ticker{
+  margin: 0;
+  width: 25px;
+  height: 25px;
+  margin: 6px -5px 0 10px;
+  border-radius: 0.25em;
+  background-color: var(--col3);
+}
+
+.tickbox input {
+  cursor: pointer;
+  position: absolute;
+  opacity: 0;
+  width: 25px;
+  height: 25px;
+  margin: 6px -5px 0 10px;
+  z-index: 4;
+}
+
+.tick{
+  width: 15px;
+  height: 15px;
+  margin: 11px -5px 0 15px;
+  background: rgb(70,70,80);
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.tickbox input:checked ~ .tick {
+  background: rgb(43, 128, 255);
+}
+
+#formContainer, #formContainer2{
+  display: none;
+  transition-timing-function: ease;
+  max-height: min-content;
+  animation: rollOut 1s ease 0s forwards;
+}
+
+.formRow{
+  display: flex;
+  align-items: center;
+}
+
+.input-suffix{
+  margin-right: 5px;
+}
+
+#YI, #returnInput{
+  width: 30px;
+}
+
+#runBtn{
+  width: 100%;
+  height: 40px;
+  border-radius: 0.3em;
+  background: rgb(43, 128, 255);
+  border: none;
+  color: #FFF;
+  font-size: 1.05em;
+  cursor: pointer;
+}
+
+#runBtn:hover{
+  background: rgb(23, 108, 235);
+}
+
+.error-message{
+  margin: 10px;
+  margin-bottom: 0;
+  height: 32px;
+  display: flex;
+  background: var(--col1);
+  padding: 5px;
+  border-radius: 0.25em;
+}
+
+.error-content{
+  text-align: center;
+  line-height: 32px;
+  padding-left: 10px;
+}
+
+.error-symbol{
+  stroke: rgb(255, 128, 0);
+  min-width: 32px;
+}
+
+.mini-error-symbol{
+  stroke: rgb(255, 128, 0);
+  width: 25px;
+  height: 100%;
+}
+
+.choose-error{
+  line-height: 16px;
+}
+
+#er-1a, #er-1b, #er-2{
+  display: none;
+}
+
+#popup{
+  width: 400px;
+  display: none;
+  position: fixed;
+  bottom: calc(50% - 100px);
+  right: calc(50% - 200px);
+  
+  background: var(--col2);
+  border: 1px solid var(--colBorder);
+  border-radius: 0.5em;
+}
+
+#popup-title{
+  color: white;
+  display: flex;
+  font-size: 1.3em;
+  margin-right: 10px;
+  padding: 10px;
+  border-bottom: 1px solid var(--colBorder);
+  width: calc(100% - 20px);
+  justify-content: space-between;
+  align-items: center;
+}
+
+.popup-content{
+  padding: 10px;
+}
+
+.small-title{
+  margin-bottom: 3px;
+  font-size: 1.1em;
+  font-weight: bold;
+  color: white;
+}
+
+.small-content{
+  color: rgb(211, 211, 235);
+  margin-bottom: 10px;
+}
+
+#closeBtn{
+  width: 25px;
+  height: 25px;
+  padding: 0;
+  border: none;
+  background: none;
+  fill: rgb(151, 151, 170);
+  z-index: 4;
+}
+
+#title-content{
+  padding-left: 5px;
+}
+
+#closeBtn:hover{
+  fill: rgb(191, 191, 210);
+}
+
+.fadeOutClass{
+  animation: fadeOut 0.5s ease 0s forwards;
+}
+
+#pca, #pcb, #pcc, #pcd{
+  display:none;
+}
+
+#results{
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  padding: 30px;
+  padding-right: 5px;
+  width: 100%;
+}
+
+.results-title{
+  color: white;
+  font-size: 2em;
+}
+
+#resultsSubtitle{
+  color: #a8a8ba;
+}
+
+#assumptionsTable{
+  color: #a8a8ba;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  font-size: 0.8em;
+  margin-top: 20px;
+}
+
+.assumtions-table-el{
+  text-align: left;
+  min-width: 250px;
+  flex-grow: 1;
+  margin-right: 10px;
+  border-radius: 0.5em;
+  border: 1px solid rgb(48, 48, 48);
+  margin-top: 10px;
+}
+
+.assumtions-table-row{
+  padding: 10px;
+  margin: 0;
+  
+  display: flex;
+  background: none;
+  border-top: 1px solid rgb(48, 48, 48);
+  justify-content: space-between;
+}
+
+.at-title{
+  background: var(--col3);
+  border-radius: 0.5em 0.5em 0 0;
+}
+
+.table-el{
+  margin: 0;
+  padding: 0;
+}
+
+@keyframes rollOut {
+  from {height: 0;}
+  to {height: 900px;}
+}
+
+@keyframes fadeOut {
+  from {opacity: 1;}
+  to {opacity: 0.1;}
+}
