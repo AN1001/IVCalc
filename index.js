@@ -59,14 +59,14 @@ function simulate() {
     sharesTotals.push(sharesTotal);
   }
   
-  let fundsTotal = parseInt( fundsInitial.value )
-  let fundsMonthlyAddition = parseInt( fundsAddition.value)
+  let fundsTotal = parseInt( fundsInitial.value );
+  let fundsMonthlyAddition = parseInt( fundsAddition.value);
   let fundsYearlyAddition = sharesMonthlyAddition * 12;
   let fundTrades = fundsTrades.value;
   let fundNumber = fundsNumber.value;
   let fundsTotals = [];
   
-  let values = [fundsInitial.value, fundNumber, fundsMonthlyAddition, fundTrades, sharesInitial.value, shareNumber, sharesMonthlyAddition, shareTrades]
+  let values = [fundsInitial.value, fundNumber, fundsMonthlyAddition, fundTrades, sharesInitial.value, shareNumber, sharesMonthlyAddition, shareTrades];
 
   for (let i = 0; i < years; i++) {
     fundsTotal += fundsYearlyAddition;
@@ -75,6 +75,7 @@ function simulate() {
   }
   
   fullTotal = fundsTotal + sharesTotal;
+  simPlatforms(values, fundsTotals, sharesTotals, years);
 
   
   //console.log([years,interestRate,fundsTotal,fundsMonthlyAddition,sharesTotal,sharesMonthlyAddition]);
@@ -230,3 +231,36 @@ function fillTable(values, tables){
     }
   }
 }
+// fundsInitial.value, fundNumber, fundsMonthlyAddition, fundTrades, sharesInitial.value, shareNumber, sharesMonthlyAddition, shareTrades
+ 
+
+async function simPlatforms(values, fundsTotals, sharesTotals, years){
+  const computedData = []
+  const response = await fetch('./platforms.json')
+  const rawData = await response.json()
+
+  rawData.forEach(function(platform){
+    let currentPlatform = [platform.Platform_Name]
+
+    if(platform.Charge_Type == "Fixed Fee"){
+        charges = fixedFeeHandler(years, platform, values)
+        currentPlatform.push(charges)
+    }
+    computedData.push(currentPlatform)
+  })
+  console.log(computedData)
+}
+
+function fixedFeeHandler(years, platform, values){
+  charges = {isa:[],jisa:[],direct:[],sipp:[]}
+  if(isaBtn.checked){
+    charges.isa.push(years*platform["Fee_ISA"])
+  }
+
+  if(jisaBtn.checked){}
+  if(directBtn.checked){}
+  if(sippBtn.checked){}
+
+  return charges
+}
+
