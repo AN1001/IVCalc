@@ -53,10 +53,16 @@ function simulate() {
   let shareNumber = sharesNumber.value;
   let sharesTotals = [];
 
-  for (let i = 0; i < years; i++) {
-    sharesTotal += sharesYearlyAddition;
-    sharesTotal *= interestRate;
-    sharesTotals.push(sharesTotal);
+  if(willInvest2.checked){
+    for (let i = 0; i < years; i++) {
+      sharesTotal += sharesYearlyAddition;
+      sharesTotal *= interestRate;
+      sharesTotals.push(sharesTotal);
+    }
+  } else {
+    sharesTotal = 0
+    sharesMonthlyAddition = 0
+    shareNumber = 0
   }
   
   let fundsTotal = parseInt( fundsInitial.value );
@@ -66,14 +72,19 @@ function simulate() {
   let fundNumber = fundsNumber.value;
   let fundsTotals = [];
   
-  let values = [fundsInitial.value, fundNumber, fundsMonthlyAddition, fundTrades, sharesInitial.value, shareNumber, sharesMonthlyAddition, shareTrades];
-
-  for (let i = 0; i < years; i++) {
-    fundsTotal += fundsYearlyAddition;
-    fundsTotal *= interestRate;
-    fundsTotals.push(fundsTotal);
+  if(willInvest.checked){
+    for (let i = 0; i < years; i++) {
+      fundsTotal += fundsYearlyAddition;
+      fundsTotal *= interestRate;
+      fundsTotals.push(fundsTotal);
+    }
+  } else {
+    fundsTotal = 0
+    fundsMonthlyAddition = 0
+    fundNumber = 0
   }
   
+  let values = [fundsInitial.value, fundNumber, fundsMonthlyAddition, fundTrades, sharesInitial.value, shareNumber, sharesMonthlyAddition, shareTrades];
   fullTotal = fundsTotal + sharesTotal;
   simPlatforms(values, fundsTotals, sharesTotals, years);
 
@@ -237,7 +248,27 @@ function fillTable(values, tables){
 async function simPlatforms(values, fundsTotals, sharesTotals, years){
   const computedData = []
   const response = await fetch('./platforms.json')
-  const rawData = await response.json()
+  let rawData = await response.json()
+  let newarr = []
+
+  for(let i=0; i<rawData.length; i++){
+    if (willInvest2.checked == true && willInvest.checked == true){
+      if(rawData[i]["Support_Funds"] == "Yes" && rawData[i]["Supports_Shares"] == "Yes"){
+        newarr.push(rawData[i])
+      }
+    } else if (willInvest.checked == true){
+      if(rawData[i]["Support_Funds"] == "Yes"){
+        newarr.push(rawData[i])
+      }
+    } else if (willInvest2.checked == true){
+      if(rawData[i]["Supports_Shares"] == "Yes"){
+        newarr.push(rawData[i])
+      }
+    }
+  }
+  
+  console.log(newarr)
+  rawData = newarr
 
   rawData.forEach(function(platform){
     let currentPlatform = [platform.Platform_Name]
@@ -253,13 +284,58 @@ async function simPlatforms(values, fundsTotals, sharesTotals, years){
 
 function fixedFeeHandler(years, platform, values){
   charges = {isa:[],jisa:[],direct:[],sipp:[]}
-  if(isaBtn.checked){
-    charges.isa.push(years*platform["Fee_ISA"])
-  }
+  let constCharge = []
 
-  if(jisaBtn.checked){}
-  if(directBtn.checked){}
-  if(sippBtn.checked){}
+  //initial buy in = cost + funds/shares held
+  charge = platform["Share_Xn_Fee"]*values[5]
+  constCharge.push(charge)
+  charge = platform["Reg_Xn_Fee"]*values[5]*values[7]*years
+  constCharge.push(charge)
+
+  //Xn fee * number held * trades per year * years
+  charge = platform["Fund_Reg_Xn"]*values[1]*values[3]*years
+  constCharge.push(charge)
+  charge = platform["Fund_Xn_Fee"]*values[1]
+  constCharge.push(charge)
+
+  
+  //total yearly cost, buy-in funds, buy-in shares, Xn funds, Xn shares, total
+  if(isaBtn.checked){
+    thisCharge = []
+    charge = years*platform["Fee_ISA"]
+    thisCharge.push(charge)
+    thisCharge = thisCharge.concat(constCharge)
+    thisCharge.push(thisCharge.reduce((partialSum, a) => partialSum + a, 0))
+
+    charges.isa = thisCharge
+  }
+  if(jisaBtn.checked){
+    thisCharge = []
+    charge = years*platform["Fee_JISA"]
+    thisCharge.push(charge)
+    thisCharge = thisCharge.concat(constCharge)
+    thisCharge.push(thisCharge.reduce((partialSum, a) => partialSum + a, 0))
+
+    charges.jisa = thisCharge
+  }
+  if(directBtn.checked){
+    thisCharge = []
+    charge = years*platform["Fee_GIA"]
+    thisCharge.push(charge)
+    thisCharge = thisCharge.concat(constCharge)
+    thisCharge.push(thisCharge.reduce((partialSum, a) => partialSum + a, 0))
+
+    charges.direct = thisCharge
+  }
+  if(sippBtn.checked){
+    thisCharge = []
+    charge = years*platform["Fee_SIPP"]
+    thisCharge.push(charge)
+    thisCharge = thisCharge.concat(constCharge)
+    thisCharge.push(thisCharge.reduce((partialSum, a) => partialSum + a, 0))
+
+    charges.sipp = thisCharge
+  }
 
   return charges
 }
