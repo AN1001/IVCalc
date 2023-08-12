@@ -284,6 +284,8 @@ async function simPlatforms(values, fundsTotals, sharesTotals, years){
     if(platform.Charge_Type == "Fixed Fee"){
         charges = fixedFeeHandler(years, platform, values);
         currentPlatform.push(charges);
+    } else if(platform.Charge_Type == "Tiered"){
+
     }
     computedData.push(currentPlatform);
   })
