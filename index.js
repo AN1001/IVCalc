@@ -41,10 +41,37 @@ function investBtnClick2(){
 }
 
 function simulate() {
+  let valid;
+  document.getElementById("er-1a").style.display = "none";
+  document.getElementById("er-1b").style.display = "none";
+  if (willInvest2.checked == true && willInvest.checked == true){
+    valid = verifyInputs("both");
+    fillTable(values, "both");
+    
+  } else if (willInvest.checked == true){
+    valid = verifyInputs("funds");
+    fillTable(values, "funds");
+    
+  } else if (willInvest2.checked == true){
+    valid = verifyInputs("shares");
+    fillTable(values, "shares");
+    
+  } else {
+    valid = false;
+    document.getElementById("er-1a").style.display = "flex";
+    document.getElementById("er-1b").style.display = "flex";
+  }
+
+  if(valid){
+    startSimulation();
+  }
+}
+
+function startSimulation(){
   let years = parseInt( yearInput.value );
   let interestRate = parseInt( returnInput.value );
   interestRate = (interestRate+100)/100;
-  document.getElementById("resultsSubtitle").innerHTML = `Simulation run over ${years} years`
+  document.getElementById("resultsSubtitle").innerHTML = `Simulation run over ${years} years`;
   
   let sharesTotal = parseInt( sharesInitial.value );
   let sharesMonthlyAddition = parseInt( sharesAddition.value);
@@ -60,9 +87,9 @@ function simulate() {
       sharesTotals.push(sharesTotal);
     }
   } else {
-    sharesTotal = 0
-    sharesMonthlyAddition = 0
-    shareNumber = 0
+    sharesTotal = 0;
+    sharesMonthlyAddition = 0;
+    shareNumber = 0;
   }
   
   let fundsTotal = parseInt( fundsInitial.value );
@@ -79,9 +106,9 @@ function simulate() {
       fundsTotals.push(fundsTotal);
     }
   } else {
-    fundsTotal = 0
-    fundsMonthlyAddition = 0
-    fundNumber = 0
+    fundsTotal = 0;
+    fundsMonthlyAddition = 0;
+    fundNumber = 0;
   }
   
   let values = [fundsInitial.value, fundNumber, fundsMonthlyAddition, fundTrades, sharesInitial.value, shareNumber, sharesMonthlyAddition, shareTrades];
@@ -91,52 +118,33 @@ function simulate() {
   
   //console.log([years,interestRate,fundsTotal,fundsMonthlyAddition,sharesTotal,sharesMonthlyAddition]);
   
-  document.getElementById("er-1a").style.display = "none";
-  document.getElementById("er-1b").style.display = "none";
-  if (willInvest2.checked == true && willInvest.checked == true){
-    verifyInputs("both");
-    fillTable(values, "both")
-    
-  } else if (willInvest.checked == true){
-    verifyInputs("funds");
-    fillTable(values, "funds")
-    
-  } else if (willInvest2.checked == true){
-    verifyInputs("shares");
-    fillTable(values, "shares")
-    
-  } else {
-    document.getElementById("er-1a").style.display = "flex";
-    document.getElementById("er-1b").style.display = "flex";
-  }
-  
 }
 
 function checkWrapper(){
   document.getElementById("er-2").style.display = "none";
   if(!isaBtn.checked && !jisaBtn.checked && !directBtn.checked && !sippBtn.checked){
     document.getElementById("er-2").style.display = "flex";
-    return false
+    return false;
   }
-  return true
+  return true;
 }
 
 function verifyInputs(group){
-  let valid = checkWrapper()
-  inputs = [fundsInitial, fundsAddition, fundsTrades, fundsNumber, sharesInitial, sharesAddition, sharesTrades, sharesNumber]
-  inputStates = []
+  let valid = checkWrapper();
+  inputs = [fundsInitial, fundsAddition, fundsTrades, fundsNumber, sharesInitial, sharesAddition, sharesTrades, sharesNumber];
+  inputStates = [];
   
   inputs.forEach(function(el){
-    let val = parseInt(el.value)
+    let val = parseInt(el.value);
     if(val < 0 || isNaN(val) || val==undefined){
-      inputStates.push(0)
+      inputStates.push(0);
     } else {
-      inputStates.push(1)
+      inputStates.push(1);
     }
   })
   
   document.querySelectorAll(".mini-error-symbol").forEach(function(el){
-    el.remove()
+    el.remove();
   })
   
   if(group == "both"){
@@ -152,35 +160,35 @@ function verifyInputs(group){
   
   for(let i=start; i<end; i++){
     if(inputStates[i]==0){
-      let par = inputs[i].parentElement.parentElement
-      par.appendChild(temp.content.cloneNode(true))
-      valid = false
+      let par = inputs[i].parentElement.parentElement;
+      par.appendChild(temp.content.cloneNode(true));
+      valid = false;
     }
   }
   
   val = parseInt(returnInput.value)
   if(val < 0 || isNaN(val) || val == undefined){
-    let par = returnInput.parentElement.parentElement
-    par.appendChild(temp.content.cloneNode(true))
-    valid = false
+    let par = returnInput.parentElement.parentElement;
+    par.appendChild(temp.content.cloneNode(true));
+    valid = false;
   }
   val = parseInt(YI.value)
   if(val < 0 || isNaN(val) || val == undefined){
-    let par = YI.parentElement.parentElement
-    par.appendChild(temp.content.cloneNode(true))
-    valid = false
+    let par = YI.parentElement.parentElement;
+    par.appendChild(temp.content.cloneNode(true));
+    valid = false;
   }
   
-  return valid
+  return valid;
 }
 
 
-const popupTitle = document.getElementById("title-content")
-const popupContent = document.getElementById("popup-content")
+const popupTitle = document.getElementById("title-content");
+const popupContent = document.getElementById("popup-content");
 
 function wrapperInfo(){
   usePopup()
-  popupTitle.innerHTML = "Wrappers"
+  popupTitle.innerHTML = "Wrappers";
   document.getElementById("pca").style.display = "block";
   document.getElementById("pcb").style.display = "none";
   document.getElementById("pcc").style.display = "none";
@@ -226,19 +234,19 @@ function closePopup(){
 
 function fillTable(values, tables){
   for(let i=1; i<9; i++){
-      document.getElementById(`tv${i}`).innerHTML = i%2==1 ? "£0" : 0
+      document.getElementById(`tv${i}`).innerHTML = i%2==1 ? "£0" : 0;
     }
   if(tables=="both"){
     for(let i=1; i<9; i++){
-      document.getElementById(`tv${i}`).innerHTML = i%2==1 ? "£"+values[i-1] : values[i-1]
+      document.getElementById(`tv${i}`).innerHTML = i%2==1 ? "£"+values[i-1] : values[i-1];
     }
   } else if(tables=="shares"){
     for(let i=4; i<9; i++){
-      document.getElementById(`tv${i}`).innerHTML = i%2==1 ? "£"+values[i-1] : values[i-1]
+      document.getElementById(`tv${i}`).innerHTML = i%2==1 ? "£"+values[i-1] : values[i-1];
     }
   } else if(tables=="funds"){
     for(let i=1; i<5; i++){
-      document.getElementById(`tv${i}`).innerHTML = i%2==1 ? "£"+values[i-1] : values[i-1]
+      document.getElementById(`tv${i}`).innerHTML = i%2==1 ? "£"+values[i-1] : values[i-1];
     }
   }
 }
@@ -246,97 +254,97 @@ function fillTable(values, tables){
  
 
 async function simPlatforms(values, fundsTotals, sharesTotals, years){
-  const computedData = []
-  const response = await fetch('./platforms.json')
-  let rawData = await response.json()
-  let newarr = []
+  const computedData = [];
+  const response = await fetch('./platforms.json');
+  let rawData = await response.json();
+  let newarr = [];
 
   for(let i=0; i<rawData.length; i++){
     if (willInvest2.checked == true && willInvest.checked == true){
       if(rawData[i]["Support_Funds"] == "Yes" && rawData[i]["Supports_Shares"] == "Yes"){
-        newarr.push(rawData[i])
+        newarr.push(rawData[i]);
       }
     } else if (willInvest.checked == true){
       if(rawData[i]["Support_Funds"] == "Yes"){
-        newarr.push(rawData[i])
+        newarr.push(rawData[i]);
       }
     } else if (willInvest2.checked == true){
       if(rawData[i]["Supports_Shares"] == "Yes"){
-        newarr.push(rawData[i])
+        newarr.push(rawData[i]);
       }
     }
   }
   
-  console.log(newarr)
-  rawData = newarr
+  console.log(newarr);
+  rawData = newarr;
 
   rawData.forEach(function(platform){
-    let currentPlatform = [platform.Platform_Name]
+    let currentPlatform = [platform.Platform_Name];
 
     if(platform.Charge_Type == "Fixed Fee"){
-        charges = fixedFeeHandler(years, platform, values)
-        currentPlatform.push(charges)
+        charges = fixedFeeHandler(years, platform, values);
+        currentPlatform.push(charges);
     }
-    computedData.push(currentPlatform)
+    computedData.push(currentPlatform);
   })
-  console.log(computedData)
+  console.log(computedData);
 }
 
 function fixedFeeHandler(years, platform, values){
-  charges = {isa:[],jisa:[],direct:[],sipp:[]}
-  let constCharge = []
+  charges = {isa:[],jisa:[],direct:[],sipp:[]};
+  let constCharge = [];
 
   //initial buy in = cost + funds/shares held
-  charge = platform["Share_Xn_Fee"]*values[5]
-  constCharge.push(charge)
-  charge = platform["Reg_Xn_Fee"]*values[5]*values[7]*years
-  constCharge.push(charge)
+  charge = platform["Share_Xn_Fee"]*values[5];
+  constCharge.push(charge);
+  charge = platform["Reg_Xn_Fee"]*values[5]*values[7]*years;
+  constCharge.push(charge);
 
   //Xn fee * number held * trades per year * years
-  charge = platform["Fund_Reg_Xn"]*values[1]*values[3]*years
-  constCharge.push(charge)
-  charge = platform["Fund_Xn_Fee"]*values[1]
-  constCharge.push(charge)
+  charge = platform["Fund_Reg_Xn"]*values[1]*values[3]*years;
+  constCharge.push(charge);
+  charge = platform["Fund_Xn_Fee"]*values[1];
+  constCharge.push(charge);
 
   
   //total yearly cost, buy-in funds, buy-in shares, Xn funds, Xn shares, total
   if(isaBtn.checked){
-    thisCharge = []
-    charge = years*platform["Fee_ISA"]
-    thisCharge.push(charge)
-    thisCharge = thisCharge.concat(constCharge)
-    thisCharge.push(thisCharge.reduce((partialSum, a) => partialSum + a, 0))
+    thisCharge = [];
+    charge = years*platform["Fee_ISA"];
+    thisCharge.push(charge);
+    thisCharge = thisCharge.concat(constCharge);
+    thisCharge.push(thisCharge.reduce((partialSum, a) => partialSum + a, 0));
 
-    charges.isa = thisCharge
+    charges.isa = thisCharge;
   }
   if(jisaBtn.checked){
-    thisCharge = []
-    charge = years*platform["Fee_JISA"]
-    thisCharge.push(charge)
-    thisCharge = thisCharge.concat(constCharge)
-    thisCharge.push(thisCharge.reduce((partialSum, a) => partialSum + a, 0))
+    thisCharge = [];
+    charge = years*platform["Fee_JISA"];
+    thisCharge.push(charge);
+    thisCharge = thisCharge.concat(constCharge);
+    thisCharge.push(thisCharge.reduce((partialSum, a) => partialSum + a, 0));
 
-    charges.jisa = thisCharge
+    charges.jisa = thisCharge;
   }
   if(directBtn.checked){
-    thisCharge = []
-    charge = years*platform["Fee_GIA"]
-    thisCharge.push(charge)
-    thisCharge = thisCharge.concat(constCharge)
-    thisCharge.push(thisCharge.reduce((partialSum, a) => partialSum + a, 0))
+    thisCharge = [];
+    charge = years*platform["Fee_GIA"];
+    thisCharge.push(charge);
+    thisCharge = thisCharge.concat(constCharge);
+    thisCharge.push(thisCharge.reduce((partialSum, a) => partialSum + a, 0));
 
-    charges.direct = thisCharge
+    charges.direct = thisCharge;
   }
   if(sippBtn.checked){
-    thisCharge = []
-    charge = years*platform["Fee_SIPP"]
-    thisCharge.push(charge)
-    thisCharge = thisCharge.concat(constCharge)
-    thisCharge.push(thisCharge.reduce((partialSum, a) => partialSum + a, 0))
+    thisCharge = [];
+    charge = years*platform["Fee_SIPP"]+years*platform["Additional_SIPP_Fee"];
+    thisCharge.push(charge);
+    thisCharge = thisCharge.concat(constCharge);
+    thisCharge.push(thisCharge.reduce((partialSum, a) => partialSum + a, 0));
 
-    charges.sipp = thisCharge
+    charges.sipp = thisCharge;
   }
 
-  return charges
+  return charges;
 }
 
