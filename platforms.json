@@ -86,7 +86,7 @@
   "Fee_ISA": {"shares":{"charge":[["Infinity",0.45,45]]},"funds":{"charge":[[250000,0.45],[1000000,0.25],[2000000,0.01],["Infinity",0]]}},
   "Fee_SIPP": {"shares":{"charge":[["Infinity",0.45,200]]},"funds":{"charge":[[250000,0.45],[1000000,0.25],[2000000,0.01],["Infinity",0]]}},
   "Additional_SIPP_Fee": 0,
-  "Fee_JISA": 0,
+  "Fee_JISA": {"shares":{"charge":[["Infinity",0]]},"funds":{"charge":[["Infinity",0]]}},
   "Fund_Xn_Fee": 0,
   "Fund_Reg_Xn": 0,
   "Share_DivInvest": 0,

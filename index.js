@@ -23,6 +23,7 @@ const returnInput = document.getElementById("returnInput");
 
 const temp = document.getElementById("mini-error");
 const popup = document.getElementById("popup");
+const divpay = document.getElementById("divpay");
 
 function investBtnClick(){
   if (willInvest.checked == true){
@@ -188,7 +189,7 @@ function verifyInputs(group){
   }
   
   val = parseInt(document.getElementById("divpay").value)
-  if(val < 0 || isNaN(val) || val == undefined){
+  if(val < 0 || isNaN(val) || val == undefined || val>100){
     let par = document.getElementById("divpay").parentElement.parentElement;
     par.appendChild(temp.content.cloneNode(true));
     valid = false;
@@ -313,6 +314,9 @@ function fixedFeeHandler(years, platform, values){
   charges = {isa:[],jisa:[],direct:[],sipp:[]};
   let constCharge = [];
 
+  divRe = platform["Share_DivInvest"] * Math.floor(values[5]*(divpay.value/100)) * years
+  constCharge.push(divRe);
+
   //initial buy in = cost * funds/shares held
   charge = platform["Share_Xn_Fee"]*values[5];
   constCharge.push(charge);
@@ -325,8 +329,9 @@ function fixedFeeHandler(years, platform, values){
   charge = platform["Fund_Xn_Fee"]*values[1];
   constCharge.push(charge);
 
+
   
-  //total yearly cost, buy-in funds, buy-in shares, Xn funds, Xn shares, total
+  //regcharge(Xns), divre, yearly cost, buy-in funds, buy-in shares, Xn funds, Xn shares, total
   //cost = years*platform fee
   if(isaBtn.checked){
     thisCharge = [];
@@ -396,6 +401,9 @@ function tieredSim(platform, fundsTotals, sharesTotals, type, values){
   let constCharge = [];
   let years = fundsTotals.length || sharesTotals.length
 
+  divRe = platform["Share_DivInvest"] * Math.floor(values[5]*(divpay.value/100)) * years
+  constCharge.push(divRe);
+
   //initial buy in = cost * funds/shares held
   charge = platform["Share_Xn_Fee"]*values[5];
   constCharge.push(charge);
@@ -412,6 +420,7 @@ function tieredSim(platform, fundsTotals, sharesTotals, type, values){
   charges.push(tieredLoop(fundsTotals, type, "funds", platform))
   charges.push(tieredLoop(sharesTotals, type, "shares", platform))
 
+  //reinvest, sharexn, initialshare buy-in, fundxn, initial fund buy-in, fundcharges, sharecharges
   return charges
 }
 
