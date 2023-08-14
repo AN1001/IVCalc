@@ -44,17 +44,15 @@ function simulate() {
   let valid;
   document.getElementById("er-1a").style.display = "none";
   document.getElementById("er-1b").style.display = "none";
+
   if (willInvest2.checked == true && willInvest.checked == true){
     valid = verifyInputs("both");
-    fillTable(values, "both");
     
   } else if (willInvest.checked == true){
     valid = verifyInputs("funds");
-    fillTable(values, "funds");
     
   } else if (willInvest2.checked == true){
     valid = verifyInputs("shares");
-    fillTable(values, "shares");
     
   } else {
     valid = false;
@@ -113,6 +111,15 @@ function startSimulation(){
   
   let values = [fundsInitial.value, fundNumber, fundsMonthlyAddition, fundTrades, sharesInitial.value, shareNumber, sharesMonthlyAddition, shareTrades];
   fullTotal = fundsTotal + sharesTotal;
+
+  if (willInvest2.checked == true && willInvest.checked == true){
+    fillTable(values, "both");
+  } else if (willInvest.checked == true){
+    fillTable(values, "funds");
+  } else if (willInvest2.checked == true){
+    fillTable(values, "shares");
+  }
+
   simPlatforms(values, fundsTotals, sharesTotals, years);
 
   
@@ -132,6 +139,7 @@ function checkWrapper(){
 function verifyInputs(group){
   let valid = checkWrapper();
   inputs = [fundsInitial, fundsAddition, fundsTrades, fundsNumber, sharesInitial, sharesAddition, sharesTrades, sharesNumber];
+
   inputStates = [];
   
   inputs.forEach(function(el){
@@ -275,17 +283,19 @@ async function simPlatforms(values, fundsTotals, sharesTotals, years){
     }
   }
   
-  console.log(newarr);
   rawData = newarr;
 
   rawData.forEach(function(platform){
     let currentPlatform = [platform.Platform_Name];
 
     if(platform.Charge_Type == "Fixed Fee"){
-        charges = fixedFeeHandler(years, platform, values);
-        currentPlatform.push(charges);
+      charges = fixedFeeHandler(years, platform, values);
+      currentPlatform.push("Fixed Fee");
+      currentPlatform.push(charges);
     } else if(platform.Charge_Type == "Tiered"){
-
+      charges = tieredFeeHandler(values, platform, fundsTotals, sharesTotals)
+      currentPlatform.push("Tiered");
+      currentPlatform.push(charges);
     }
     computedData.push(currentPlatform);
   })
@@ -296,20 +306,21 @@ function fixedFeeHandler(years, platform, values){
   charges = {isa:[],jisa:[],direct:[],sipp:[]};
   let constCharge = [];
 
-  //initial buy in = cost + funds/shares held
+  //initial buy in = cost * funds/shares held
   charge = platform["Share_Xn_Fee"]*values[5];
   constCharge.push(charge);
-  charge = platform["Reg_Xn_Fee"]*values[5]*values[7]*years;
+  charge = platform["Reg_Xn_Fee"]*values[7]*years;
   constCharge.push(charge);
 
-  //Xn fee * number held * trades per year * years
-  charge = platform["Fund_Reg_Xn"]*values[1]*values[3]*years;
+  //Xn fee * trades per year * years
+  charge = platform["Fund_Reg_Xn"]*values[3]*years;
   constCharge.push(charge);
   charge = platform["Fund_Xn_Fee"]*values[1];
   constCharge.push(charge);
 
   
   //total yearly cost, buy-in funds, buy-in shares, Xn funds, Xn shares, total
+  //cost = years*platform fee
   if(isaBtn.checked){
     thisCharge = [];
     charge = years*platform["Fee_ISA"];
@@ -349,4 +360,82 @@ function fixedFeeHandler(years, platform, values){
 
   return charges;
 }
+// [fundsInitial.value, fundNumber, fundsMonthlyAddition, fundTrades, sharesInitial.value, shareNumber, sharesMonthlyAddition, shareTrades];
 
+function tieredFeeHandler(values, platform, fundsTotals, sharesTotals){
+  charges = {isa:[],jisa:[],direct:[],sipp:[]};
+
+  if(isaBtn.checked){
+    charges.isa.push(tieredSim(platform, fundsTotals, sharesTotals, "Fee_ISA", values))
+  }
+
+  if(jisaBtn.checked){
+    charges.jisa.push(tieredSim(platform, fundsTotals, sharesTotals, "Fee_JISA", values))
+  }
+
+  if(directBtn.checked){
+    charges.direct.push(tieredSim(platform, fundsTotals, sharesTotals, "Fee_GIA", values))
+  }
+
+  if(sippBtn.checked){
+    charges.sipp.push(tieredSim(platform, fundsTotals, sharesTotals, "Fee_SIPP", values))
+  }
+
+  return charges
+}
+
+function tieredSim(platform, fundsTotals, sharesTotals, type, values){
+  let charges = [];
+  let constCharge = [];
+  let years = fundsTotals.length || sharesTotals.length
+
+  //initial buy in = cost * funds/shares held
+  charge = platform["Share_Xn_Fee"]*values[5];
+  constCharge.push(charge);
+  charge = platform["Reg_Xn_Fee"]*values[7]*years;
+  constCharge.push(charge);
+
+  //Xn fee * trades per year * years
+  charge = platform["Fund_Reg_Xn"]*values[3]*years;
+  constCharge.push(charge);
+  charge = platform["Fund_Xn_Fee"]*values[1];
+  constCharge.push(charge);
+
+  charges.push(constCharge)
+  charges.push(tieredLoop(fundsTotals, type, "funds", platform))
+  charges.push(tieredLoop(sharesTotals, type, "shares", platform))
+
+  return charges
+}
+
+function tieredLoop(typeTotals, type, heldType, platform){
+  let charges = []
+  typeTotals.forEach(function(val){
+    let charge = 0;
+    cur = val
+    platform[type][heldType]["charge"].every(function(band){
+      let curCharge = 0
+      if(cur-band[0]>=0){
+        curCharge+=band[0]*(band[1]/100)
+        cur = cur-band[0]
+      } else {
+        curCharge+=cur*(band[1]/100)
+        charge+=curCharge
+        return false
+      }
+
+      if(band[2]>curCharge){
+        curCharge = band[2]
+      }
+      if(band[3]<curCharge){
+        curCharge = band[3]
+      }
+      charge+=curCharge
+
+      return true 
+    })
+
+    charges.push(charge)
+  })
+  return charges
+}
