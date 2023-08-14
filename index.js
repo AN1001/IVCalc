@@ -187,6 +187,13 @@ function verifyInputs(group){
     valid = false;
   }
   
+  val = parseInt(document.getElementById("divpay").value)
+  if(val < 0 || isNaN(val) || val == undefined){
+    let par = document.getElementById("divpay").parentElement.parentElement;
+    par.appendChild(temp.content.cloneNode(true));
+    valid = false;
+  }
+
   return valid;
 }
 

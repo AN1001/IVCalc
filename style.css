@@ -119,6 +119,7 @@ body{
   margin: 7px;
   margin-bottom: 3px;
   color: #d3d3eb;
+  font-size: 1em;
 }
 
 .input {
@@ -384,10 +385,6 @@ body{
   padding: 0;
 }
 
-@keyframes rollOut {
-  from {height: 0;}
-  to {height: 900px;}
-}
 
 @keyframes fadeOut {
   from {opacity: 1;}
