@@ -496,7 +496,3 @@ function tieredLoop(typeTotals, type, heldType, platform){
   })
   return charges
 }
-
-function fixedFeeSpecialHandler(years, platform, values){
-  
-}

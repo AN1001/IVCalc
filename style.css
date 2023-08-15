@@ -332,8 +332,8 @@ body{
   display: flex;
   align-items: stretch;
   flex-direction: column;
-  padding: 30px;
-  padding-right: 5px;
+  padding: 60px;
+  padding-top: 25px;
   width: 100%;
 }
 
