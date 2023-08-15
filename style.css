@@ -385,6 +385,37 @@ body{
   padding: 0;
 }
 
+.summary-title{
+  color: whitesmoke;
+  font-size: 2em;
+  margin: 25px 10px 10px 0;
+}
+
+#summary-blocks-holder{
+  display: flex;
+  justify-content: left;
+}
+
+#total-earned-block, #lowest-charge-platform, #lowest-charge-block{
+  min-width: 150px;
+  background: #2c2c34;
+  padding: 17px;
+  border-radius: 0.25em;
+  margin: 0 20px 0 0;
+  color: #c0c0d2;
+  font-size: 0.9em;
+  letter-spacing: .5px;
+  margin-bottom: .25rem;
+}
+
+#totalEarnedVal, #lowestPlatformVal, #lowestChargeVal{
+  color: whitesmoke;
+  font-size: 1.8em;
+}
+
+#totalEarnedVal{
+  color: greenyellow;
+}
 
 @keyframes fadeOut {
   from {opacity: 1;}
