@@ -276,15 +276,15 @@ async function simPlatforms(values, fundsTotals, sharesTotals, years){
   let newarr = [];
 
   for(let i=0; i<rawData.length; i++){
-    if (willInvest2.checked == true && willInvest.checked == true){
+    if (willInvest2.checked && willInvest.checked){
       if(rawData[i]["Support_Funds"] == "Yes" && rawData[i]["Supports_Shares"] == "Yes"){
         newarr.push(rawData[i]);
       }
-    } else if (willInvest.checked == true){
+    } else if (willInvest.checked){
       if(rawData[i]["Support_Funds"] == "Yes"){
         newarr.push(rawData[i]);
       }
-    } else if (willInvest2.checked == true){
+    } else if (willInvest2.checked){
       if(rawData[i]["Supports_Shares"] == "Yes"){
         newarr.push(rawData[i]);
       }
@@ -296,13 +296,13 @@ async function simPlatforms(values, fundsTotals, sharesTotals, years){
   rawData.forEach(function(platform){
     let currentPlatform = [platform.Platform_Name];
 
-    if(platform.Charge_Type == "Fixed Fee"){
-      charges = fixedFeeHandler(years, platform, values);
-      currentPlatform.push("Fixed Fee");
+    if(platform.Charge_Type == "Fixed Fee" || platform.Charge_Type == "Fixed Fee Special"){
+      charges = fixedFeeHandler(years, platform, values, fundsTotals, sharesTotals, platform.Charge_Type == "Fixed Fee Special");
+      currentPlatform.push(platform.Charge_Type);
       currentPlatform.push(charges);
     } else if(platform.Charge_Type == "Tiered"){
       charges = tieredFeeHandler(values, platform, fundsTotals, sharesTotals)
-      currentPlatform.push("Tiered");
+      currentPlatform.push(platform.Charge_Type);
       currentPlatform.push(charges);
     }
     computedData.push(currentPlatform);
@@ -310,7 +310,7 @@ async function simPlatforms(values, fundsTotals, sharesTotals, years){
   console.log(computedData);
 }
 
-function fixedFeeHandler(years, platform, values){
+function fixedFeeHandler(years, platform, values, fundsTotals, sharesTotals, isSpecial){
   charges = {isa:[],jisa:[],direct:[],sipp:[]};
   let constCharge = [];
 
@@ -360,13 +360,48 @@ function fixedFeeHandler(years, platform, values){
 
     charges.direct = thisCharge;
   }
-  if(sippBtn.checked){
+  if(sippBtn.checked && !isSpecial){
     thisCharge = [];
     charge = years*platform["Fee_SIPP"]+years*platform["Additional_SIPP_Fee"];
     thisCharge.push(charge);
     thisCharge = thisCharge.concat(constCharge);
     thisCharge.push(thisCharge.reduce((partialSum, a) => partialSum + a, 0));
 
+    charges.sipp = thisCharge;
+  } else if(sippBtn.checked && isSpecial){
+    console.log("ran")
+    charge = []
+    if (willInvest.checked && willInvest2.checked){
+      for(let i=0; i<fundsTotals.length; i++){
+        if(fundsTotals[i]+sharesTotals[i]<50000){
+          charge.push(90+platform["Additional_SIPP_Fee"])
+        } else {
+          charge.push(180+platform["Additional_SIPP_Fee"])
+        }
+      }
+    } else if (willInvest2.checked){
+      sharesTotals.forEach(function(el){
+        if(el<50000){
+          charge.push(90+platform["Additional_SIPP_Fee"])
+        } else {
+          charge.push(180+platform["Additional_SIPP_Fee"])
+        }
+      })
+    } else if (willInvest.checked){
+      fundsTotals.forEach(function(el){
+        if(el<50000){
+          charge.push(90+platform["Additional_SIPP_Fee"])
+        } else {
+          charge.push(180+platform["Additional_SIPP_Fee"])
+        }
+      })
+    }
+
+    thisCharge = []
+    
+    thisCharge.push(charge);
+    thisCharge = thisCharge.concat(constCharge);
+    thisCharge.push(charge.reduce((partialSum, a) => partialSum + a, 0) + constCharge.reduce((partialSum, a) => partialSum + a, 0));
     charges.sipp = thisCharge;
   }
 
@@ -416,11 +451,17 @@ function tieredSim(platform, fundsTotals, sharesTotals, type, values){
   charge = platform["Fund_Xn_Fee"]*values[1];
   constCharge.push(charge);
 
+  if(type == "Fee_SIPP"){
+    constCharge.push(years*platform["Additional_SIPP_Fee"]);
+  }
+
   charges.push(constCharge)
   charges.push(tieredLoop(fundsTotals, type, "funds", platform))
   charges.push(tieredLoop(sharesTotals, type, "shares", platform))
 
-  //reinvest, sharexn, initialshare buy-in, fundxn, initial fund buy-in, fundcharges, sharecharges
+  //reinvest, sharexn, initialshare buy-in, fundxn, initial fund buy-in, (Additional SIPP fees)
+  //fundcharges,
+  //sharecharges
   return charges
 }
 
@@ -454,4 +495,8 @@ function tieredLoop(typeTotals, type, heldType, platform){
     charges.push(charge)
   })
   return charges
+}
+
+function fixedFeeSpecialHandler(years, platform, values){
+  
 }
