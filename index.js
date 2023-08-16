@@ -25,6 +25,21 @@ const temp = document.getElementById("mini-error");
 const popup = document.getElementById("popup");
 const divpay = document.getElementById("divpay");
 
+const header = document.getElementById("flexibleTitle");
+let btns = header.getElementsByClassName("radioBtnHolder");
+for (let i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function() {
+    let current = document.getElementsByClassName("active");
+    current[0].classList.toggle("active");
+    this.classList.toggle("active");
+  });
+}
+
+const ISARadio = document.getElementById("ISARadio");
+const JISARadio = document.getElementById("JISARadio");
+const SIPPRadio = document.getElementById("SIPPRadio");
+const directRadio = document.getElementById("directRadio");
+
 function investBtnClick(){
   if (willInvest.checked == true){
     investForm.style.display = "block";
@@ -60,6 +75,36 @@ function simulate() {
     document.getElementById("er-1a").style.display = "flex";
     document.getElementById("er-1b").style.display = "flex";
   }
+
+  let buttonsClicked = []
+  ISARadio.parentElement.style.display = "none";
+  JISARadio.parentElement.style.display = "none";
+  directRadio.parentElement.style.display = "none";
+  SIPPRadio.parentElement.style.display = "none";
+
+  if(isaBtn.checked){
+    buttonsClicked.push(ISARadio)
+  }
+
+  if(jisaBtn.checked){
+    buttonsClicked.push(JISARadio)
+  }
+
+  if(directBtn.checked){
+    buttonsClicked.push(directRadio)
+  }
+
+  if(sippBtn.checked){
+    buttonsClicked.push(SIPPRadio)
+  }
+
+  let current = document.getElementsByClassName("active");
+  current[0].classList.toggle("active");
+
+  buttonsClicked[0].parentElement.classList.toggle("active")
+  buttonsClicked.forEach(function(el){
+    el.parentElement.style.display = "block";
+  })
 
   if(valid){
     let values = startSimulation();
@@ -372,7 +417,6 @@ function fixedFeeHandler(years, platform, values, fundsTotals, sharesTotals, isS
 
     charges.sipp = thisCharge;
   } else if(sippBtn.checked && isSpecial){
-    console.log("ran")
     charge = []
     if (willInvest.checked && willInvest2.checked){
       for(let i=0; i<fundsTotals.length; i++){
@@ -501,5 +545,19 @@ function tieredLoop(typeTotals, type, heldType, platform){
 }
 
 function startRender(data){
+  //data.forEach(function(el){
+    //addBlock(el)
+  //})
 
+}
+
+blockTemplate = document.getElementById("broker-block-template")
+function addBlock(el){
+  let newBlock = blockTemplate.content.cloneNode(true)
+  newBlock.getElementById("bbName").innerHTML = el[1];
+  let finalVal = 0;
+
+  newBlock.getElementById("bbFinalVal")
+  newBlock.getElementById("bbFee")
+  newBlock.getElementById("bbFeePerc")
 }

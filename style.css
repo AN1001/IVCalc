@@ -391,7 +391,7 @@ body{
 .summary-title{
   color: whitesmoke;
   font-size: 2em;
-  margin: 25px 10px 10px 0;
+  margin-right: 10px;
 }
 
 #summary-blocks-holder{
@@ -452,6 +452,50 @@ body{
 .eq{
   margin: 0 10px 0 10px;
   color: greenyellow;
+}
+
+.radioBtnHolder{
+  width: 68px;
+  height: 34px;
+  border-radius: 0.25em;
+  background: var(--col2);
+  margin: 0 10px 0 10px;
+  line-height: 36px;
+
+  display: none;
+}
+
+.radioBtn{
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  opacity: 0;
+}
+
+.radioBtn :hover{
+  background: blue;
+}
+
+.radioBtnName{
+    color: white;
+    text-align: center;
+    font-size: 1em;
+    margin: 0;
+
+}
+
+#flexibleTitle{
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.active{
+  width: 66px;
+  height: 32px;
+  border: 1px solid rgb(43, 128, 255);
+  line-height: 34px;
 }
 
 @keyframes fadeOut {

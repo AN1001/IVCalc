@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div id="main" class="">
+    <main id="main" class="">
       <div>
       <div id="top-bar">
         <svg id="logo-svg" xmlns="http://www.w3.org/2000/svg" width="54" height="45" viewBox="0 0 19 20" fill="none">
@@ -267,7 +267,32 @@
         </div>
       </div>
   
-      <div class="summary-title">Summary</div>
+      <div id="flexibleTitle">
+        <div class="summary-title">Summary</div>
+
+        <div class="radioBtnHolder active">
+          <button class="radioBtn" id="ISARadio" name="wrapperRadio"></button>
+          <h2 class="radioBtnName">ISA</h2>
+        </div>
+        
+        <div class="radioBtnHolder">
+          <button class="radioBtn" id="JISARadio" name="wrapperRadio"></button>
+          <h2 class="radioBtnName">JISA</h2>
+        </div>
+        
+        <div class="radioBtnHolder">
+          <button class="radioBtn" id="directRadio" name="wrapperRadio"></button>
+          <h2 class="radioBtnName">Direct</h2>
+        </div>
+        
+        <div class="radioBtnHolder">
+          <button class="radioBtn" id="SIPPRadio" name="wrapperRadio"></button>
+          <h2 class="radioBtnName">SIPP</h2>
+        </div>
+        
+      </div>
+      
+
       <div id="summary-blocks-holder">
 
         <div id="total-earned-block">
@@ -290,79 +315,79 @@
       <section id="broker-blocks-holder"></section>
 
     </section>
-  </div>
+    </main>
   
-  <section id="popup">
-    <div id="popup-title">
-      <div id="title-content">Wrappers</div>
-      <button id="closeBtn" onclick="closePopup()">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" style="width: 25px; height: 25px;">
-          <path d="M38 12.83L35.17 10 24 21.17 12.83 10 10 12.83 21.17 24 10 35.17 12.83 38 24 26.83 35.17 38 38 35.17 26.83 24z"></path>
-        </svg>
-      </button>
-    </div>
-  
-    <div class="popup-content" id="pca">
-      <div class="small-title">ISA</div>
-      <div class="small-content">Funds held within a stocks & shares Individual Savings Account.</div>
-  
-      <div class="small-title">Junior ISA</div>
-      <div class="small-content">Junior ISA, completely tax-free and cannot be withdrawn from until 18</div>
-  
-      <div class="small-title">Direct</div>
-      <div class="small-content">Funds held directly, excluding of any tax wrappers.</div>
-  
-      <div class="small-title">SIPP</div>
-      <div class="small-content">Funds held within a Self-Invested Personal Pension.</div>
-    </div>
-  
-    <div class="popup-content" id="pcb">
-      <div class="small-title">Excludes</div>
-      <div class="small-content">Does not include ETFs or Investment trusts, these may be accounted for in the 'Shares Investment' tab</div>
-      <div class="small-title">Number Of Funds</div>
-      <div class="small-content">Number of diffent types of funds held, your monthly addition will be evenly added and a purchase sent out for each one. The commission for this will be calculated and displayed</div>
-      <div class="small-title">Trades Per Year</div>
-      <div class="small-content">NOTE that Trades Per Year is the total number of trades across all funds held per year</div>
-    </div>
-  
-    <div class="popup-content" id="pcc">
-      <div class="small-title">Excludes</div>
-      <div class="small-content">Excludes cost of initially buying the stocks</div>
-      <div class="small-title">Trades Per Year</div>
-      <div class="small-content">NOTE that Trades Per Year is the total number of trades across all shares held per year</div>
-    </div>
-  
-    <div class="popup-content" id="pcd">
-      <div class="small-title">Comparison Duration</div>
-      <div class="small-content">How long the simulation should last for, note that long term simulations may be innacurate as cannot account for change in commissions</div>
-      <div class="small-title">Annual Return</div>
-      <div class="small-content">The percentage you expect your portfolio to grow by yearly, 7% is an industy average for ETF growth</div>
-  
-    </div>
-  </section>
-  
-  <template id="mini-error">
-    <svg class="mini-error-symbol" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-      <line x1="12" y1="9" x2="12" y2="13"></line>
-      <line x1="12" y1="17" x2="12.01" y2="17"></line>
-    </svg>
-  </template>
-
-  <template id="broker-block-template">
-    <div class="broker-block">
-      <div class="broker-block-title">Freetrade</div>
-      <div class="broker-block-subtitle">Net Final</div>
-      <div class="broker-block-final-val">£10,000,564</div>
-      <div class="broker-block-subtitle">Fees</div>
-      <div class="broker-block-fees">
-        <div class="broker-block-fee">£10,400</div>
-        <div class="eq">=</div>
-        <div class="broker-block-perc-fee">0.04%</div>
+    <section id="popup">
+      <div id="popup-title">
+        <div id="title-content">Wrappers</div>
+        <button id="closeBtn" onclick="closePopup()">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" style="width: 25px; height: 25px;">
+            <path d="M38 12.83L35.17 10 24 21.17 12.83 10 10 12.83 21.17 24 10 35.17 12.83 38 24 26.83 35.17 38 38 35.17 26.83 24z"></path>
+          </svg>
+        </button>
       </div>
-    </div>
-  </template>
+    
+      <div class="popup-content" id="pca">
+        <div class="small-title">ISA</div>
+        <div class="small-content">Funds held within a stocks & shares Individual Savings Account.</div>
+    
+        <div class="small-title">Junior ISA</div>
+        <div class="small-content">Junior ISA, completely tax-free and cannot be withdrawn from until 18</div>
+    
+        <div class="small-title">Direct</div>
+        <div class="small-content">Funds held directly, excluding of any tax wrappers.</div>
+    
+        <div class="small-title">SIPP</div>
+        <div class="small-content">Funds held within a Self-Invested Personal Pension.</div>
+      </div>
+    
+      <div class="popup-content" id="pcb">
+        <div class="small-title">Excludes</div>
+        <div class="small-content">Does not include ETFs or Investment trusts, these may be accounted for in the 'Shares Investment' tab</div>
+        <div class="small-title">Number Of Funds</div>
+        <div class="small-content">Number of diffent types of funds held, your monthly addition will be evenly added and a purchase sent out for each one. The commission for this will be calculated and displayed</div>
+        <div class="small-title">Trades Per Year</div>
+        <div class="small-content">NOTE that Trades Per Year is the total number of trades across all funds held per year</div>
+      </div>
+    
+      <div class="popup-content" id="pcc">
+        <div class="small-title">Excludes</div>
+        <div class="small-content">Excludes cost of initially buying the stocks</div>
+        <div class="small-title">Trades Per Year</div>
+        <div class="small-content">NOTE that Trades Per Year is the total number of trades across all shares held per year</div>
+      </div>
+    
+      <div class="popup-content" id="pcd">
+        <div class="small-title">Comparison Duration</div>
+        <div class="small-content">How long the simulation should last for, note that long term simulations may be innacurate as cannot account for change in commissions</div>
+        <div class="small-title">Annual Return</div>
+        <div class="small-content">The percentage you expect your portfolio to grow by yearly, 7% is an industy average for ETF growth</div>
+    
+      </div>
+    </section>
+  
+    <template id="mini-error">
+      <svg class="mini-error-symbol" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+        <line x1="12" y1="9" x2="12" y2="13"></line>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+      </svg>
+    </template>
 
-	<script src="index.js"></script>
+    <template id="broker-block-template">
+      <div class="broker-block">
+        <div class="broker-block-title" id="bbName">Freetrade</div>
+        <div class="broker-block-subtitle">Net Final</div>
+        <div class="broker-block-final-val" id="bbFinalVal">£10,000,564</div>
+        <div class="broker-block-subtitle">Fees</div>
+        <div class="broker-block-fees">
+          <div class="broker-block-fee" id="bbFee">£10,400</div>
+          <div class="eq">=</div>
+          <div class="broker-block-perc-fee" id="bbFeePerc">0.04%</div>
+        </div>
+      </div>
+    </template>
+
+	  <script src="index.js"></script>
   </body>
 </html>
