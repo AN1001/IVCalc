@@ -62,7 +62,8 @@ function simulate() {
   }
 
   if(valid){
-    startSimulation();
+    let values = startSimulation();
+    startRender(values);
   }
 }
 
@@ -121,7 +122,7 @@ function startSimulation(){
     fillTable(values, "shares");
   }
 
-  simPlatforms(values, fundsTotals, sharesTotals, years);
+  return simPlatforms(values, fundsTotals, sharesTotals, years);
 
   
   //console.log([years,interestRate,fundsTotal,fundsMonthlyAddition,sharesTotal,sharesMonthlyAddition]);
@@ -294,7 +295,7 @@ async function simPlatforms(values, fundsTotals, sharesTotals, years){
   rawData = newarr;
 
   rawData.forEach(function(platform){
-    let currentPlatform = [platform.Platform_Name];
+    let currentPlatform = [platform, platform.Platform_Name];
 
     if(platform.Charge_Type == "Fixed Fee" || platform.Charge_Type == "Fixed Fee Special"){
       charges = fixedFeeHandler(years, platform, values, fundsTotals, sharesTotals, platform.Charge_Type == "Fixed Fee Special");
@@ -307,7 +308,9 @@ async function simPlatforms(values, fundsTotals, sharesTotals, years){
     }
     computedData.push(currentPlatform);
   })
-  console.log(computedData);
+  
+  console.log(computedData)
+  return computedData
 }
 
 function fixedFeeHandler(years, platform, values, fundsTotals, sharesTotals, isSpecial){
@@ -495,4 +498,8 @@ function tieredLoop(typeTotals, type, heldType, platform){
     charges.push(charge)
   })
   return charges
+}
+
+function startRender(data){
+
 }

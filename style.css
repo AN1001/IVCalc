@@ -366,8 +366,9 @@ body{
 }
 
 .assumtions-table-row{
-  padding: 10px;
+  padding: 10px 20px 10px 20px;
   margin: 0;
+  font-size: 1.2em;
   
   display: flex;
   background: none;
@@ -376,8 +377,10 @@ body{
 }
 
 .at-title{
-  background: var(--col3);
+  background: var(--col2);
   border-radius: 0.5em 0.5em 0 0;
+  color: white;
+  font-size: 1.4em;
 }
 
 .table-el{
@@ -394,18 +397,17 @@ body{
 #summary-blocks-holder{
   display: flex;
   justify-content: left;
+  flex-wrap: wrap;
 }
 
 #total-earned-block, #lowest-charge-platform, #lowest-charge-block{
-  min-width: 150px;
+  min-width: fit-content;
   background: #2c2c34;
   padding: 17px;
   border-radius: 0.25em;
-  margin: 0 20px 0 0;
+  margin: 0 10px 15px 0;
   color: #c0c0d2;
   font-size: 0.9em;
-  letter-spacing: .5px;
-  margin-bottom: .25rem;
 }
 
 #totalEarnedVal, #lowestPlatformVal, #lowestChargeVal{
@@ -414,6 +416,41 @@ body{
 }
 
 #totalEarnedVal{
+  color: greenyellow;
+}
+
+.broker-block{
+  background: var(--col2);
+  color: whitesmoke;
+  border-radius: 0.25em;
+  width: 200px;
+  padding: 14px;
+}
+
+.broker-block-title{
+  font-size: 1.6em;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+.broker-block-subtitle{
+  font-size: 0.95em;
+  color: #c0c0d2;
+}
+
+.broker-block-final-val{
+  font-size: 1.6em;
+  margin-bottom: 10px;
+  border-bottom: 1px solid white;
+}
+
+.broker-block-fees{
+  display: flex;
+  font-size: 1.2em
+}
+
+.eq{
+  margin: 0 10px 0 10px;
   color: greenyellow;
 }
 
