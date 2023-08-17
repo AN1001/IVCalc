@@ -270,22 +270,22 @@
       <div id="flexibleTitle">
         <div class="summary-title">Summary</div>
 
-        <div class="radioBtnHolder active">
+        <div class="radioBtnHolder active" id="0">
           <button class="radioBtn" id="ISARadio" name="wrapperRadio"></button>
           <h2 class="radioBtnName">ISA</h2>
         </div>
         
-        <div class="radioBtnHolder">
+        <div class="radioBtnHolder" id="1">
           <button class="radioBtn" id="JISARadio" name="wrapperRadio"></button>
           <h2 class="radioBtnName">JISA</h2>
         </div>
         
-        <div class="radioBtnHolder">
+        <div class="radioBtnHolder" id="2">
           <button class="radioBtn" id="directRadio" name="wrapperRadio"></button>
           <h2 class="radioBtnName">Direct</h2>
         </div>
         
-        <div class="radioBtnHolder">
+        <div class="radioBtnHolder" id="3">
           <button class="radioBtn" id="SIPPRadio" name="wrapperRadio"></button>
           <h2 class="radioBtnName">SIPP</h2>
         </div>
@@ -297,22 +297,24 @@
 
         <div id="total-earned-block">
           <div>Total Earned (No Charges)</div>
-          <div id="totalEarnedVal">£10,000,564</div>
+          <div id="totalEarnedVal">£--</div>
         </div>
 
         <div id="lowest-charge-platform">
           <div>Best Platform</div>
-          <div id="lowestPlatformVal">Freetrade</div>
+          <div id="lowestPlatformVal">--</div>
         </div>
 
         <div id="lowest-charge-block">
           <div>Lowest Charge</div>
-          <div id="lowestChargeVal">£4568</div>
+          <div id="lowestChargeVal">£--</div>
         </div>
 
       </div>
 
-      <section id="broker-blocks-holder"></section>
+      <section id="broker-blocks-holder">
+        
+      </section>
 
     </section>
     </main>
@@ -362,7 +364,8 @@
         <div class="small-content">How long the simulation should last for, note that long term simulations may be innacurate as cannot account for change in commissions</div>
         <div class="small-title">Annual Return</div>
         <div class="small-content">The percentage you expect your portfolio to grow by yearly, 7% is an industy average for ETF growth</div>
-    
+        <div class="small-title">Proportion Divident Paying Stocks</div>
+        <div class="small-content">The percentage of all the stocks you own that pay divident, this is necessary as some brokers charge extra to reinvest divident</div>
       </div>
     </section>
   
@@ -377,13 +380,15 @@
     <template id="broker-block-template">
       <div class="broker-block">
         <div class="broker-block-title" id="bbName">Freetrade</div>
-        <div class="broker-block-subtitle">Net Final</div>
-        <div class="broker-block-final-val" id="bbFinalVal">£10,000,564</div>
-        <div class="broker-block-subtitle">Fees</div>
-        <div class="broker-block-fees">
-          <div class="broker-block-fee" id="bbFee">£10,400</div>
-          <div class="eq">=</div>
-          <div class="broker-block-perc-fee" id="bbFeePerc">0.04%</div>
+        <div>
+          <div class="broker-block-subtitle">Net Final</div>
+          <div class="broker-block-final-val" id="bbFinalVal">--</div>
+          <div class="broker-block-subtitle">Fees</div>
+          <div class="broker-block-fees">
+            <div class="broker-block-fee" id="bbFee">--</div>
+            <div class="eq">=</div>
+            <div class="broker-block-perc-fee" id="bbFeePerc">--</div>
+          </div>
         </div>
       </div>
     </template>

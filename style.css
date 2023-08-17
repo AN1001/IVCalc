@@ -334,7 +334,10 @@ body{
   flex-direction: column;
   padding: 60px;
   padding-top: 25px;
-  width: 100%;
+  width: calc(100% - 375px);
+
+  height: calc(100vh - 105px);
+  overflow-y: scroll;
 }
 
 .results-title{
@@ -419,16 +422,30 @@ body{
   color: greenyellow;
 }
 
+#broker-blocks-holder{
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  min-height: 230px;
+}
+
 .broker-block{
   background: var(--col2);
-  color: whitesmoke;
+  color: #d3d3eb;
   border-radius: 0.25em;
-  width: 200px;
+  min-width: 200px;
+  max-width: 200px;
+  height: 200px;
   padding: 14px;
+
+  margin: 0 10px 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .broker-block-title{
-  font-size: 1.6em;
+  font-size: 1.3em;
   color: #fff;
   margin-bottom: 5px;
 }
@@ -441,7 +458,6 @@ body{
 .broker-block-final-val{
   font-size: 1.6em;
   margin-bottom: 10px;
-  border-bottom: 1px solid white;
 }
 
 .broker-block-fees{

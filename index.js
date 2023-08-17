@@ -21,9 +21,22 @@ const sharesNumber = document.getElementById("sharesNumber");
 const yearInput = document.getElementById("YI");
 const returnInput = document.getElementById("returnInput");
 
+var final = 0;
+
 const temp = document.getElementById("mini-error");
 const popup = document.getElementById("popup");
 const divpay = document.getElementById("divpay");
+
+var isaRankedData = [];
+var sippRankedData = [];
+var jisaRankedData = [];
+var directRankedData = [];
+var rankedDatas = [isaRankedData, jisaRankedData, directRankedData, sippRankedData];
+
+var c1 = false;
+var c2 = false;
+var c3 = false;
+var c4 = false;
 
 const header = document.getElementById("flexibleTitle");
 let btns = header.getElementsByClassName("radioBtnHolder");
@@ -32,6 +45,7 @@ for (let i = 0; i < btns.length; i++) {
     let current = document.getElementsByClassName("active");
     current[0].classList.toggle("active");
     this.classList.toggle("active");
+    fillContent(rankedDatas[this.id], ["isa","jisa","direct","sipp"][this.id])
   });
 }
 
@@ -76,32 +90,41 @@ function simulate() {
     document.getElementById("er-1b").style.display = "flex";
   }
 
-  let buttonsClicked = []
+  let buttonsClicked = [];
   ISARadio.parentElement.style.display = "none";
   JISARadio.parentElement.style.display = "none";
   directRadio.parentElement.style.display = "none";
   SIPPRadio.parentElement.style.display = "none";
 
+  c1 = c2 = c3 = c4 = false;
   if(isaBtn.checked){
-    buttonsClicked.push(ISARadio)
+    buttonsClicked.push(ISARadio);
+    c1 = true;
   }
 
   if(jisaBtn.checked){
-    buttonsClicked.push(JISARadio)
+    buttonsClicked.push(JISARadio);
+    c2 = true;
   }
 
   if(directBtn.checked){
-    buttonsClicked.push(directRadio)
+    buttonsClicked.push(directRadio);
+    c3 = true;
   }
 
   if(sippBtn.checked){
-    buttonsClicked.push(SIPPRadio)
+    buttonsClicked.push(SIPPRadio);
+    c4 = true;
   }
 
   let current = document.getElementsByClassName("active");
-  current[0].classList.toggle("active");
+  if(current[0]){
+    current[0].classList.toggle("active");
+  }
 
-  buttonsClicked[0].parentElement.classList.toggle("active")
+  if(buttonsClicked[0]){
+    buttonsClicked[0].parentElement.classList.toggle("active")
+  }
   buttonsClicked.forEach(function(el){
     el.parentElement.style.display = "block";
   })
@@ -139,7 +162,7 @@ function startSimulation(){
   
   let fundsTotal = parseInt( fundsInitial.value );
   let fundsMonthlyAddition = parseInt( fundsAddition.value);
-  let fundsYearlyAddition = sharesMonthlyAddition * 12;
+  let fundsYearlyAddition = fundsMonthlyAddition * 12;
   let fundTrades = fundsTrades.value;
   let fundNumber = fundsNumber.value;
   let fundsTotals = [];
@@ -158,6 +181,8 @@ function startSimulation(){
   
   let values = [fundsInitial.value, fundNumber, fundsMonthlyAddition, fundTrades, sharesInitial.value, shareNumber, sharesMonthlyAddition, shareTrades];
   fullTotal = fundsTotal + sharesTotal;
+  final = Math.round(fullTotal);
+  document.getElementById("totalEarnedVal").innerHTML = "£"+Math.round(fullTotal).toLocaleString();
 
   if (willInvest2.checked == true && willInvest.checked == true){
     fillTable(values, "both");
@@ -300,15 +325,15 @@ function fillTable(values, tables){
     }
   if(tables=="both"){
     for(let i=1; i<9; i++){
-      document.getElementById(`tv${i}`).innerHTML = i%2==1 ? "£"+values[i-1] : values[i-1];
+      document.getElementById(`tv${i}`).innerHTML = i%2==1 ? "£"+parseInt(values[i-1]).toLocaleString() : parseInt(values[i-1]).toLocaleString();
     }
   } else if(tables=="shares"){
     for(let i=4; i<9; i++){
-      document.getElementById(`tv${i}`).innerHTML = i%2==1 ? "£"+values[i-1] : values[i-1];
+      document.getElementById(`tv${i}`).innerHTML = i%2==1 ? "£"+parseInt(values[i-1]).toLocaleString() : parseInt(values[i-1]).toLocaleString();
     }
   } else if(tables=="funds"){
     for(let i=1; i<5; i++){
-      document.getElementById(`tv${i}`).innerHTML = i%2==1 ? "£"+values[i-1] : values[i-1];
+      document.getElementById(`tv${i}`).innerHTML = i%2==1 ? "£"+parseInt(values[i-1]).toLocaleString() : parseInt(values[i-1]).toLocaleString();
     }
   }
 }
@@ -354,8 +379,8 @@ async function simPlatforms(values, fundsTotals, sharesTotals, years){
     computedData.push(currentPlatform);
   })
   
-  console.log(computedData)
-  return computedData
+  console.log(computedData);
+  return computedData;
 }
 
 function fixedFeeHandler(years, platform, values, fundsTotals, sharesTotals, isSpecial){
@@ -421,30 +446,30 @@ function fixedFeeHandler(years, platform, values, fundsTotals, sharesTotals, isS
     if (willInvest.checked && willInvest2.checked){
       for(let i=0; i<fundsTotals.length; i++){
         if(fundsTotals[i]+sharesTotals[i]<50000){
-          charge.push(90+platform["Additional_SIPP_Fee"])
+          charge.push(90+platform["Additional_SIPP_Fee"]);
         } else {
-          charge.push(180+platform["Additional_SIPP_Fee"])
+          charge.push(180+platform["Additional_SIPP_Fee"]);
         }
       }
     } else if (willInvest2.checked){
       sharesTotals.forEach(function(el){
         if(el<50000){
-          charge.push(90+platform["Additional_SIPP_Fee"])
+          charge.push(90+platform["Additional_SIPP_Fee"]);
         } else {
-          charge.push(180+platform["Additional_SIPP_Fee"])
+          charge.push(180+platform["Additional_SIPP_Fee"]);
         }
       })
     } else if (willInvest.checked){
       fundsTotals.forEach(function(el){
         if(el<50000){
-          charge.push(90+platform["Additional_SIPP_Fee"])
+          charge.push(90+platform["Additional_SIPP_Fee"]);
         } else {
-          charge.push(180+platform["Additional_SIPP_Fee"])
+          charge.push(180+platform["Additional_SIPP_Fee"]);
         }
       })
     }
 
-    thisCharge = []
+    thisCharge = [];
     
     thisCharge.push(charge);
     thisCharge = thisCharge.concat(constCharge);
@@ -460,30 +485,30 @@ function tieredFeeHandler(values, platform, fundsTotals, sharesTotals){
   charges = {isa:[],jisa:[],direct:[],sipp:[]};
 
   if(isaBtn.checked){
-    charges.isa.push(tieredSim(platform, fundsTotals, sharesTotals, "Fee_ISA", values))
+    charges.isa.push(tieredSim(platform, fundsTotals, sharesTotals, "Fee_ISA", values));
   }
 
   if(jisaBtn.checked){
-    charges.jisa.push(tieredSim(platform, fundsTotals, sharesTotals, "Fee_JISA", values))
+    charges.jisa.push(tieredSim(platform, fundsTotals, sharesTotals, "Fee_JISA", values));
   }
 
   if(directBtn.checked){
-    charges.direct.push(tieredSim(platform, fundsTotals, sharesTotals, "Fee_GIA", values))
+    charges.direct.push(tieredSim(platform, fundsTotals, sharesTotals, "Fee_GIA", values));
   }
 
   if(sippBtn.checked){
-    charges.sipp.push(tieredSim(platform, fundsTotals, sharesTotals, "Fee_SIPP", values))
+    charges.sipp.push(tieredSim(platform, fundsTotals, sharesTotals, "Fee_SIPP", values));
   }
 
-  return charges
+  return charges;
 }
 
 function tieredSim(platform, fundsTotals, sharesTotals, type, values){
   let charges = [];
   let constCharge = [];
-  let years = fundsTotals.length || sharesTotals.length
+  let years = fundsTotals.length || sharesTotals.length;
 
-  divRe = platform["Share_DivInvest"] * Math.floor(values[5]*(divpay.value/100)) * years
+  divRe = platform["Share_DivInvest"] * Math.floor(values[5]*(divpay.value/100)) * years;
   constCharge.push(divRe);
 
   //initial buy in = cost * funds/shares held
@@ -503,8 +528,8 @@ function tieredSim(platform, fundsTotals, sharesTotals, type, values){
   }
 
   charges.push(constCharge)
-  charges.push(tieredLoop(fundsTotals, type, "funds", platform))
-  charges.push(tieredLoop(sharesTotals, type, "shares", platform))
+  charges.push(tieredLoop(fundsTotals, type, "funds", platform));
+  charges.push(tieredLoop(sharesTotals, type, "shares", platform));
 
   //reinvest, sharexn, initialshare buy-in, fundxn, initial fund buy-in, (Additional SIPP fees)
   //fundcharges,
@@ -513,51 +538,133 @@ function tieredSim(platform, fundsTotals, sharesTotals, type, values){
 }
 
 function tieredLoop(typeTotals, type, heldType, platform){
-  let charges = []
+  let charges = [];
   typeTotals.forEach(function(val){
     let charge = 0;
-    cur = val
+    cur = val;
     platform[type][heldType]["charge"].every(function(band){
-      let curCharge = 0
+      let curCharge = 0;
       if(cur-band[0]>=0){
-        curCharge+=band[0]*(band[1]/100)
-        cur = cur-band[0]
+        curCharge+=band[0]*(band[1]/100);
+        cur = cur-band[0];
       } else {
-        curCharge+=cur*(band[1]/100)
-        charge+=curCharge
-        return false
+        curCharge+=cur*(band[1]/100);
+        charge+=curCharge;
+        return false;
       }
 
       if(band[2]>curCharge){
-        curCharge = band[2]
+        curCharge = band[2];
       }
       if(band[3]<curCharge){
-        curCharge = band[3]
+        curCharge = band[3];
       }
-      charge+=curCharge
+      charge+=curCharge;
 
-      return true 
+      return true;
     })
 
-    charges.push(charge)
+    charges.push(charge);
   })
-  return charges
+  return charges;
 }
 
-function startRender(data){
-  //data.forEach(function(el){
-    //addBlock(el)
-  //})
+async function startRender(data){
+  data = await data;
+  
+  isaRankedData = filterData(data.toSorted(getSorter("isa")), "isa" );
+  jisaRankedData = filterData(data.toSorted(getSorter("jisa")), "jisa" );
+  directRankedData = filterData(data.toSorted(getSorter("direct")), "direct" );
+  sippRankedData = filterData(data.toSorted(getSorter("sipp")), "sipp");
 
+  rankedDatas = [isaRankedData, jisaRankedData, directRankedData, sippRankedData];
+
+  if(c1){fillContent(isaRankedData, "isa");
+  } else if(c2){fillContent(jisaRankedData, "jisa");
+  } else if(c3){fillContent(directRankedData, "direct");
+  } else if(c4){fillContent(sippRankedData, "sipp");
+  }
+  
 }
 
-blockTemplate = document.getElementById("broker-block-template")
-function addBlock(el){
-  let newBlock = blockTemplate.content.cloneNode(true)
+function getSorter(wrapper){
+  return function(a, b){
+    if(getFees(a,wrapper) < getFees(b,wrapper)){
+      return -1;
+    } else {
+      return 1;
+    }
+  }
+}
+
+function filterData(data, wrapper){
+  let newarr = []
+  data.forEach(function(el){
+    let check = getFees(el, wrapper);
+    if(check != undefined && !isNaN(check)){
+      newarr.push(el)
+    }
+  })
+  return newarr
+}
+
+function getFees(el, wrapper){
+  if(el[2]=="Fixed Fee" || el[2]=="Fixed Fee Special"){
+    return el[3][wrapper][6]
+  } else if (el[2]=="Tiered"){
+    currentSum = 0;
+    if(el[3][wrapper][0]){
+      (el[3][wrapper][0]).forEach(function(arr){
+        currentSum+=arr.reduce((partialSum, a) => partialSum + a, 0);
+      })
+    } else {
+      return undefined;
+    }
+    
+    return currentSum;
+  }
+}
+
+const blockTemplate = document.getElementById("broker-block-template");
+const blockHolder = document.getElementById("broker-blocks-holder");
+function addBlock(el, wrapper){
+  let newBlock = blockTemplate.content.cloneNode(true);
   newBlock.getElementById("bbName").innerHTML = el[1];
   let finalVal = 0;
 
-  newBlock.getElementById("bbFinalVal")
-  newBlock.getElementById("bbFee")
-  newBlock.getElementById("bbFeePerc")
+  let fee = getFees(el, wrapper);
+
+  newBlock.getElementById("bbFinalVal").innerHTML = "£"+(parseInt(final) - parseInt(fee)).toLocaleString();
+  newBlock.getElementById("bbFee").innerHTML = "£"+fee.toLocaleString();
+  newBlock.getElementById("bbFeePerc").innerHTML = Math.round((fee/final)*10000)/100+"%";
+
+  blockHolder.appendChild(newBlock);
 }
+
+const lowestPlatformVal = document.getElementById("lowestPlatformVal");
+const lowestChargeVal = document.getElementById("lowestChargeVal");
+
+function fillBlocks(data, wrapper){
+  while (blockHolder.lastElementChild) {
+    blockHolder.removeChild(blockHolder.lastElementChild);
+  }
+
+  data.forEach(function(el){
+    addBlock(el, wrapper);
+  })
+}
+
+function fillContent(data, wrapper){
+  let string = data[0][1];
+  let length = 18;
+  let trimmedString = string.length > length ? string.substring(0, length - 3) + "..." : string.substring(0, length); 
+  lowestPlatformVal.innerHTML = trimmedString;
+  lowestChargeVal.innerHTML = "£"+parseInt(getFees(data[0], wrapper)).toLocaleString();
+
+  if(c1){fillBlocks(data, "isa");
+  } else if(c2){fillBlocks(data, "jisa");
+  } else if(c3){fillBlocks(data, "direct");
+  } else if(c4){fillBlocks(data, "sipp");
+  }
+}
+
