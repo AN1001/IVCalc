@@ -571,13 +571,14 @@ function tieredLoop(typeTotals, type, heldType, platform){
 
 async function startRender(data){
   data = await data;
-  
-  isaRankedData = filterData(data.toSorted(getSorter("isa")), "isa" );
-  jisaRankedData = filterData(data.toSorted(getSorter("jisa")), "jisa" );
-  directRankedData = filterData(data.toSorted(getSorter("direct")), "direct" );
-  sippRankedData = filterData(data.toSorted(getSorter("sipp")), "sipp");
 
-  rankedDatas = [isaRankedData, jisaRankedData, directRankedData, sippRankedData];
+  isaRankedData = filterData(data, "isa" ).toSorted(getSorter("isa"));
+  jisaRankedData = filterData(data, "jisa" ).toSorted(getSorter("jisa"));
+  directRankedData = filterData(data, "direct" ).toSorted(getSorter("direct"));
+  sippRankedData = filterData(data, "sipp").toSorted(getSorter("sipp"));
+
+  let rankedDatas = [isaRankedData, jisaRankedData, directRankedData, sippRankedData];
+  console.log(rankedDatas)
 
   if(c1){fillContent(isaRankedData, "isa");
   } else if(c2){fillContent(jisaRankedData, "jisa");
@@ -589,11 +590,7 @@ async function startRender(data){
 
 function getSorter(wrapper){
   return function(a, b){
-    if(getFees(a,wrapper) < getFees(b,wrapper)){
-      return -1;
-    } else {
-      return 1;
-    }
+    return getFees(a,wrapper) - getFees(b,wrapper)
   }
 }
 
@@ -661,10 +658,9 @@ function fillContent(data, wrapper){
   lowestPlatformVal.innerHTML = trimmedString;
   lowestChargeVal.innerHTML = "£"+parseInt(getFees(data[0], wrapper)).toLocaleString();
 
-  if(c1){fillBlocks(data, "isa");
-  } else if(c2){fillBlocks(data, "jisa");
-  } else if(c3){fillBlocks(data, "direct");
-  } else if(c4){fillBlocks(data, "sipp");
-  }
+  
+  fillBlocks(data, wrapper)
+
 }
 
+//platform
