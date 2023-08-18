@@ -360,12 +360,11 @@ body{
 
 .assumtions-table-el{
   text-align: left;
-  min-width: 250px;
-  flex-grow: 1;
-  margin-right: 10px;
   border-radius: 0.5em;
   border: 1px solid rgb(48, 48, 48);
   margin-top: 10px;
+  flex-basis: 49%;
+  min-width: 250px;
 }
 
 .assumtions-table-row{
@@ -427,6 +426,7 @@ body{
   flex-wrap: nowrap;
   overflow-x: scroll;
   min-height: 230px;
+  padding: 1px;
 }
 
 .broker-block{
@@ -512,6 +512,37 @@ body{
   height: 32px;
   border: 1px solid rgb(43, 128, 255);
   line-height: 34px;
+}
+
+#broker-block-hints{
+  display: flex;
+  color: white;
+  justify-content: space-between;
+  color: rgba(224,226,255,.6);
+  font-size: 0.9em;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+#graph1, #graph2{
+  height: 200px;
+  background: blue;
+  flex-basis: 49%;
+  min-width: 250px;
+
+  border-radius: 0.5em;
+  margin-top: 11px;
+}
+
+.cluster-holder{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.active2{
+  outline: 1px solid rgb(43, 128, 255);
 }
 
 @keyframes fadeOut {

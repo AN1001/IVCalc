@@ -38,6 +38,8 @@ var c2 = false;
 var c3 = false;
 var c4 = false;
 
+var currentlyActive = [{}, "Name", "Fixed Fee", {}]
+
 const header = document.getElementById("flexibleTitle");
 let btns = header.getElementsByClassName("radioBtnHolder");
 for (let i = 0; i < btns.length; i++) {
@@ -577,7 +579,7 @@ async function startRender(data){
   directRankedData = filterData(data, "direct" ).toSorted(getSorter("direct"));
   sippRankedData = filterData(data, "sipp").toSorted(getSorter("sipp"));
 
-  let rankedDatas = [isaRankedData, jisaRankedData, directRankedData, sippRankedData];
+  rankedDatas = [isaRankedData, jisaRankedData, directRankedData, sippRankedData];
   console.log(rankedDatas)
 
   if(c1){fillContent(isaRankedData, "isa");
@@ -632,10 +634,24 @@ function addBlock(el, wrapper){
   let fee = getFees(el, wrapper);
 
   newBlock.getElementById("bbFinalVal").innerHTML = "£"+(parseInt(final) - parseInt(fee)).toLocaleString();
-  newBlock.getElementById("bbFee").innerHTML = "£"+fee.toLocaleString();
+  newBlock.getElementById("bbFee").innerHTML = "£"+parseInt(fee).toLocaleString();
   newBlock.getElementById("bbFeePerc").innerHTML = Math.round((fee/final)*10000)/100+"%";
 
-  blockHolder.appendChild(newBlock);
+  let capsule = document.createElement("div")
+  capsule.appendChild(newBlock);
+  blockHolder.appendChild(capsule);
+
+  capsule.addEventListener("click",function() {
+    let element = el;
+
+    let blocks = blockHolder.getElementsByClassName("active2");
+    if(blocks[0]){
+      blocks[0].classList.toggle("active2")
+    }
+
+    this.firstElementChild.classList.toggle("active2")
+
+  })
 }
 
 const lowestPlatformVal = document.getElementById("lowestPlatformVal");
@@ -660,7 +676,7 @@ function fillContent(data, wrapper){
 
   
   fillBlocks(data, wrapper)
-
+  //blockHolder.firstChild.classList.toggle("active2")
 }
 
 //platform
