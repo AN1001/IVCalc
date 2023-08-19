@@ -349,7 +349,7 @@ body{
   color: #a8a8ba;
 }
 
-#assumptionsTable{
+#assumptionsTable, #assumptionsTable2{
   color: #a8a8ba;
   display: flex;
   flex-wrap: wrap;
@@ -544,6 +544,59 @@ body{
 .active2{
   outline: 1px solid rgb(43, 128, 255);
 }
+
+#broker-info{
+  min-height: 300px;
+  display: flex;
+  gap: 10px;
+}
+
+#mgt0{
+  margin-top: 0;
+}
+
+#finalEl{
+  line-height: 28px;
+}
+
+#assumptionsTable2{
+  margin-top: 0;
+  height: 250px;
+}
+
+#barChart {
+  width: 210px;
+  height: 243.5px;
+  display: flex;
+  gap: 15px;
+  padding: 5px 15px 0 15px;
+  align-items: flex-end;
+  padding-bottom: 0;
+  outline: 1px solid var(--col3);
+  border-radius: 0.25em;
+    
+}
+
+.bar{
+  flex-grow: 1;
+}
+
+.bar-body{
+  height: 100px;
+  outline: 1px solid rgb(43, 128, 255);
+  background: rgb(27, 42, 66);
+  border-radius: 0.15em 0.15em 0 0;
+  min-height: 20px;
+}
+
+.bar-tag{
+  color: rgb(168, 168, 186);
+  width: 41px;
+  text-align: center;
+  font-size: 0.9em
+}
+
+
 
 @keyframes fadeOut {
   from {opacity: 1;}

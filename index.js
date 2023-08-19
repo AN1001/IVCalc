@@ -642,7 +642,7 @@ function addBlock(el, wrapper){
   blockHolder.appendChild(capsule);
 
   capsule.addEventListener("click",function() {
-    let element = el;
+    currentlyActive = el;
 
     let blocks = blockHolder.getElementsByClassName("active2");
     if(blocks[0]){
@@ -650,7 +650,7 @@ function addBlock(el, wrapper){
     }
 
     this.firstElementChild.classList.toggle("active2")
-
+    fillExtraData(currentlyActive)
   })
 }
 
@@ -676,7 +676,85 @@ function fillContent(data, wrapper){
 
   
   fillBlocks(data, wrapper)
-  //blockHolder.firstChild.classList.toggle("active2")
+  blockHolder.firstElementChild.firstElementChild.classList.toggle("active2")
+  currentlyActive = data[0]
+  fillExtraData(currentlyActive)
+}
+
+function fillExtraData(el){
+  resetExtraData()
+  console.log(el)
+
+  if(el[2] == "Fixed Fee"){
+    document.getElementById("assumptionsTable2").style.display = "block";
+    document.getElementById("barChart").style.display = "flex";
+    fillBarChart( [ el[0].Fee_ISA, el[0].Fee_JISA, el[0].Fee_GIA, el[0].Fee_SIPP ] )
+  }
+}
+
+const maxBarHeight = 180;
+function fillBarChart(wrappers){
+  resetBarChart()
+  document.getElementById("tv21").innerHTML = "£"+wrappers[0].toLocaleString()
+  document.getElementById("tv22").innerHTML = "£"+wrappers[1].toLocaleString()
+  document.getElementById("tv23").innerHTML = "£"+wrappers[2].toLocaleString()
+  document.getElementById("tv24").innerHTML = "£"+wrappers[3].toLocaleString()
+
+  curMax = 0;
+  wrappers.forEach(function(el){
+    if(el>curMax){
+      curMax = el
+    }
+  })
+  
+  let ratio = maxBarHeight/curMax;
+  if(ratio*wrappers[0] || wrappers[0]==0){
+    document.getElementById("isaBar").style.height = `${ratio*wrappers[0]}px`;
+  } else {
+    document.getElementById("isaBar").style.height = "20px";
+    document.getElementById("isaBar").style.background = "rgb(66, 27, 42)";
+    document.getElementById("isaBar").style.outline = "1px solid rgb(255, 43, 128)";
+
+  }
+  if(ratio*wrappers[1] || wrappers[1]==0){
+    document.getElementById("jisaBar").style.height = `${ratio*wrappers[1]}px`;
+  } else {
+    document.getElementById("jisaBar").style.height = "20px";
+    document.getElementById("jisaBar").style.background = "rgb(66, 27, 42)";
+    document.getElementById("jisaBar").style.outline = "1px solid rgb(255, 43, 128)";
+
+  }
+  if(ratio*wrappers[2] || wrappers[2]==0){
+    document.getElementById("directBar").style.height = `${ratio*wrappers[2]}px`;
+  } else {
+    document.getElementById("directBar").style.height = "20px";
+    document.getElementById("directBar").style.background = "rgb(66, 27, 42)";
+    document.getElementById("directBar").style.outline = "1px solid rgb(255, 43, 128)";
+
+  }
+  if(ratio*wrappers[3] || wrappers[3]==0){
+    document.getElementById("sippBar").style.height = `${ratio*wrappers[3]}px`;
+  } else {
+    document.getElementById("sippBar").style.height = "20px";
+    document.getElementById("sippBar").style.background = "rgb(66, 27, 42)";
+    document.getElementById("sippBar").style.outline = "1px solid rgb(255, 43, 128)";
+
+  }
+}
+
+function resetBarChart(){
+  ["isaBar", "jisaBar", "directBar", "sippBar"].forEach(function(barTag){
+    document.getElementById(barTag).style.background = "rgb(27, 42, 66)";
+    document.getElementById(barTag).style.outline = "1px solid rgb(43, 128, 225)";
+  })
+  
+}
+
+const extraDataZone = document.getElementById("broker-info")
+function resetExtraData(){
+  document.querySelectorAll(".exDEl").forEach(function(el){
+    el.style.display = "none";
+  })
 }
 
 //platform
