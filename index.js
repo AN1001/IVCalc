@@ -689,7 +689,15 @@ function fillExtraData(el){
     document.getElementById("assumptionsTable2").style.display = "block";
     document.getElementById("barChart").style.display = "flex";
     fillBarChart( [ el[0].Fee_ISA, el[0].Fee_JISA, el[0].Fee_GIA, el[0].Fee_SIPP ] )
+  } else if(el[2] == "Tiered"){
+
   }
+
+  document.getElementById("tv31").innerHTML = "£"+el[0]["Share_Xn_Fee"].toLocaleString()
+  document.getElementById("tv32").innerHTML = "£"+el[0]["Reg_Xn_Fee"].toLocaleString()
+  document.getElementById("tv33").innerHTML = "£"+el[0]["Share_DivInvest"].toLocaleString()
+  document.getElementById("tv41").innerHTML = "£"+el[0]["Fund_Xn_Fee"].toLocaleString()
+  document.getElementById("tv42").innerHTML = "£"+el[0]["Fund_Reg_Xn"].toLocaleString()
 }
 
 const maxBarHeight = 180;
