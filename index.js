@@ -646,11 +646,11 @@ function addBlock(el, wrapper){
 
     let blocks = blockHolder.getElementsByClassName("active2");
     if(blocks[0]){
-      blocks[0].classList.toggle("active2")
+      blocks[0].classList.toggle("active2");
     }
 
-    this.firstElementChild.classList.toggle("active2")
-    fillExtraData(currentlyActive)
+    this.firstElementChild.classList.toggle("active2");
+    fillExtraData(currentlyActive);
   })
 }
 
@@ -675,43 +675,48 @@ function fillContent(data, wrapper){
   lowestChargeVal.innerHTML = "£"+parseInt(getFees(data[0], wrapper)).toLocaleString();
 
   
-  fillBlocks(data, wrapper)
-  blockHolder.firstElementChild.firstElementChild.classList.toggle("active2")
-  currentlyActive = data[0]
-  fillExtraData(currentlyActive)
+  fillBlocks(data, wrapper);
+  blockHolder.firstElementChild.firstElementChild.classList.toggle("active2");
+  currentlyActive = data[0];
+  fillExtraData(currentlyActive);
 }
 
 function fillExtraData(el){
   resetExtraData()
+  document.getElementById("ExT").innerHTML = `More On ${el[1]}`
   console.log(el)
 
   if(el[2] == "Fixed Fee"){
     document.getElementById("assumptionsTable2").style.display = "block";
     document.getElementById("barChart").style.display = "flex";
-    fillBarChart( [ el[0].Fee_ISA, el[0].Fee_JISA, el[0].Fee_GIA, el[0].Fee_SIPP ] )
+    fillBarChart( [ el[0].Fee_ISA, el[0].Fee_JISA, el[0].Fee_GIA, el[0].Fee_SIPP ] );
   } else if(el[2] == "Tiered"){
 
   }
 
-  document.getElementById("tv31").innerHTML = "£"+el[0]["Share_Xn_Fee"].toLocaleString()
-  document.getElementById("tv32").innerHTML = "£"+el[0]["Reg_Xn_Fee"].toLocaleString()
-  document.getElementById("tv33").innerHTML = "£"+el[0]["Share_DivInvest"].toLocaleString()
-  document.getElementById("tv41").innerHTML = "£"+el[0]["Fund_Xn_Fee"].toLocaleString()
-  document.getElementById("tv42").innerHTML = "£"+el[0]["Fund_Reg_Xn"].toLocaleString()
+  if(el[0]["Supports_Shares"]=="Yes"){
+    document.getElementById("tv31").innerHTML = "£"+el[0]["Share_Xn_Fee"].toLocaleString();
+    document.getElementById("tv32").innerHTML = "£"+el[0]["Reg_Xn_Fee"].toLocaleString();
+    document.getElementById("tv33").innerHTML = "£"+el[0]["Share_DivInvest"].toLocaleString();
+  }
+  if(el[0]["Support_Funds"]=="Yes"){
+    document.getElementById("tv41").innerHTML = "£"+el[0]["Fund_Xn_Fee"].toLocaleString();
+    document.getElementById("tv42").innerHTML = "£"+el[0]["Fund_Reg_Xn"].toLocaleString();
+  }
 }
 
 const maxBarHeight = 180;
 function fillBarChart(wrappers){
-  resetBarChart()
-  document.getElementById("tv21").innerHTML = "£"+wrappers[0].toLocaleString()
-  document.getElementById("tv22").innerHTML = "£"+wrappers[1].toLocaleString()
-  document.getElementById("tv23").innerHTML = "£"+wrappers[2].toLocaleString()
-  document.getElementById("tv24").innerHTML = "£"+wrappers[3].toLocaleString()
+  resetBarChart();
+  document.getElementById("tv21").innerHTML = "£"+wrappers[0].toLocaleString();
+  document.getElementById("tv22").innerHTML = "£"+wrappers[1].toLocaleString();
+  document.getElementById("tv23").innerHTML = "£"+wrappers[2].toLocaleString();
+  document.getElementById("tv24").innerHTML = "£"+wrappers[3].toLocaleString();
 
   curMax = 0;
   wrappers.forEach(function(el){
     if(el>curMax){
-      curMax = el
+      curMax = el;
     }
   })
   
@@ -758,11 +763,17 @@ function resetBarChart(){
   
 }
 
-const extraDataZone = document.getElementById("broker-info")
+const extraDataZone = document.getElementById("broker-info");
 function resetExtraData(){
   document.querySelectorAll(".exDEl").forEach(function(el){
     el.style.display = "none";
   })
+
+  document.getElementById("tv31").innerHTML = "£NA";
+  document.getElementById("tv32").innerHTML = "£NA";
+  document.getElementById("tv33").innerHTML = "£NA";
+  document.getElementById("tv41").innerHTML = "£NA";
+  document.getElementById("tv42").innerHTML = "£NA";
 }
 
 //platform
