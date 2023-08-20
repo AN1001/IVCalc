@@ -420,6 +420,17 @@
         </div>
       </div>
 
+      <div class="normalFeesFixed">
+        <ul class="assumtions-table-row at-title ex">
+          <div>Extra info</div>
+        </ul>
+        <div id="source">One free monthly trade, Junior ISA is free with main account,Ex. US/UK Share transcations cost £19.99 per trade</div>
+      </div>
+
+      <div class="exDEl" id="fillerSec">
+
+      </div>
+
       <div id="feeBreakdown">
         <ul class="assumtions-table-row at-title ex">
           <div>Transaction Fee Breakdown</div>
@@ -513,11 +524,28 @@
 
       </div>
 
-      <div class="normalFeesFixed">
+      <div class="normalFeesFixed exDEl" id="fundsBands">
         <ul class="assumtions-table-row at-title ex">
-          <div>Extra info</div>
+          <div>Normal Fund Fees</div>
         </ul>
-        <div id="source">One free monthly trade, Junior ISA is free with main account,Ex. US/UK Share transcations cost £19.99 per trade</div>
+
+        <div class="band" id="ogBand">
+          <span>£0</span>
+          <span id="sub">(scroll down for more)</span>
+        </div>
+
+      </div>
+
+      <div class="normalFeesFixed exDEl" id="sharesBands">
+        <ul class="assumtions-table-row at-title ex">
+          <div>Normal Share Fees</div>
+        </ul>
+
+        <div class="band" id="ogBand">
+          <span>£0</span>
+          <span id="sub">(scroll down for more)</span>
+        </div>
+
       </div>
 
       </section>
@@ -575,6 +603,24 @@
       </div>
     </section>
   
+    <template id="bandTemplate">
+      <div class="trueParent">
+        <div class="info-holder">
+          <div class="arrow-down">
+            <svg class="arrow" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path id="XMLID_24_" d="M216.358,271.76c-2.322-5.605-7.792-9.26-13.858-9.26H180V15c0-8.284-6.716-15-15-15 c-8.284,0-15,6.716-15,15v247.5h-22.5c-6.067,0-11.537,3.655-13.858,9.26c-2.321,5.605-1.038,12.057,3.252,16.347l37.5,37.5 C157.322,328.536,161.161,330,165,330s7.678-1.464,10.607-4.394l37.5-37.5C217.396,283.816,218.68,277.365,216.358,271.76z"></path>
+            </g>
+            </svg>
+          </div>
+          <div class="band-info">
+            <div class="percFee" id="f1">0.35%</div>
+            <div class="minimum" id="f2">Min: £40</div>
+            <div class="maximum" id="f3">Max: None</div>
+          </div>
+        </div>
+        <div class="band" id="f4">£100,000</div>
+      </div>
+    </template>
+
     <template id="mini-error">
       <svg class="mini-error-symbol" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>

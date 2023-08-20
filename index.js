@@ -681,6 +681,10 @@ function fillContent(data, wrapper){
   fillExtraData(currentlyActive, wrapper);
 }
 
+const tierTemplate = document.getElementById("bandTemplate");
+const fundsBand = document.getElementById("fundsBands")
+const sharesBand = document.getElementById("sharesBands")
+
 function fillExtraData(el, wrapper){
   resetExtraData();
   document.getElementById("ExT").innerHTML = `More On ${el[1]}`;
@@ -690,14 +694,15 @@ function fillExtraData(el, wrapper){
     document.getElementById("source").innerHTML = "No extra info";
   }
   
-
+  let wrapperTo = {"isa":"Fee_ISA", "jisa":"Fee_JISA", "direct":"Fee_GIA", "sipp":"Fee_SIPP"}[wrapper];
   if(el[2] == "Fixed Fee"){
     document.getElementById("assumptionsTable2").style.display = "block";
     document.getElementById("barChart").style.display = "flex";
     document.getElementById("xz").style.display = "block";
+    document.getElementById("fillerSec").style.display = "block";
+    
     fillBarChart( [ el[0].Fee_ISA, el[0].Fee_JISA, el[0].Fee_GIA, el[0].Fee_SIPP ] );
 
-    let wrapperTo = {"isa":"Fee_ISA", "jisa":"Fee_JISA", "direct":"Fee_GIA", "sipp":"Fee_SIPP"}[wrapper];
     document.getElementById("e1").innerHTML = "£"+el[0][wrapperTo].toLocaleString();
     document.getElementById("e4").innerHTML = `Platform Charge For ${wrapper}`;
     document.getElementById("e2").innerHTML = yearInput.value;
@@ -706,6 +711,53 @@ function fillExtraData(el, wrapper){
     document.getElementById("etotal").innerHTML = "£"+parseInt( parseFloat(el[0][wrapperTo])*parseInt(yearInput.value)+parseFloat(el[3][wrapper][1])).toLocaleString();
 
   } else if(el[2] == "Tiered"){
+    fundsBand.style.display = "block";
+    sharesBand.style.display = "block";
+    
+    let fundsTiers = el[0][wrapperTo].funds.charge
+    let sharesTiers = el[0][wrapperTo].shares.charge
+
+    let paras = document.getElementsByClassName("trueParent")
+
+    while(paras[0]) {
+      paras[0].parentNode.removeChild(paras[0]);
+    }
+
+    fundsTiers.forEach(function(tier){
+      let tierEl = tierTemplate.content.cloneNode(true)
+      tierEl.getElementById("f1").innerHTML = tier[1]+"%";
+      if(tier[2]){
+        tierEl.getElementById("f2").innerHTML = "Min: £"+tier[2].toLocaleString();
+      } else {
+        tierEl.getElementById("f2").innerHTML = "Min: None"
+      }
+      if(tier[3]){
+        tierEl.getElementById("f3").innerHTML = "Max: £"+tier[3].toLocaleString();
+      } else {
+        tierEl.getElementById("f3").innerHTML = "Max: None"
+      }
+      tierEl.getElementById("f4").innerHTML = "Next £"+tier[0]
+
+      fundsBand.appendChild(tierEl);
+    })
+
+    sharesTiers.forEach(function(tier){
+      let tierEl = tierTemplate.content.cloneNode(true)
+      tierEl.getElementById("f1").innerHTML = tier[1]+"%";
+      if(tier[2]){
+        tierEl.getElementById("f2").innerHTML = "Min: £"+tier[2].toLocaleString();
+      } else {
+        tierEl.getElementById("f2").innerHTML = "Min: None"
+      }
+      if(tier[3]){
+        tierEl.getElementById("f3").innerHTML = "Max: £"+tier[3].toLocaleString();
+      } else {
+        tierEl.getElementById("f3").innerHTML = "Max: None"
+      }
+      tierEl.getElementById("f4").innerHTML = "Next £"+tier[0]
+
+      sharesBand.appendChild(tierEl);
+    })
 
   }
 
