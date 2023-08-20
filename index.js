@@ -33,6 +33,11 @@ const sfgArea = document.getElementById("shareFeeGraph")
 var fundFeeGraph = createChart(ffgArea, [123,23,54], "Funds Fee")
 var shareFeeGraph = createChart(sfgArea, [123,23,54], "Share Fee")
 
+const fgArea = document.getElementById("graph1");
+const sgArea = document.getElementById("graph2")
+var fundGraph = createChart(fgArea, [123,23,54], "Fund Growth")
+var shareGraph = createChart(sgArea, [123,23,54], "Share Growth")
+
 var isaRankedData = [];
 var sippRankedData = [];
 var jisaRankedData = [];
@@ -160,7 +165,7 @@ function startSimulation(){
     for (let i = 0; i < years; i++) {
       sharesTotal += sharesYearlyAddition;
       sharesTotal *= interestRate;
-      sharesTotals.push(sharesTotal);
+      sharesTotals.push(Math.round(sharesTotal * 100) / 100);
     }
   } else {
     sharesTotal = 0;
@@ -179,7 +184,7 @@ function startSimulation(){
     for (let i = 0; i < years; i++) {
       fundsTotal += fundsYearlyAddition;
       fundsTotal *= interestRate;
-      fundsTotals.push(fundsTotal);
+      fundsTotals.push(Math.round(fundsTotal * 100) / 100);
     }
   } else {
     fundsTotal = 0;
@@ -387,6 +392,23 @@ async function simPlatforms(values, fundsTotals, sharesTotals, years){
     computedData.push(currentPlatform);
   })
   
+  if(fundsTotals.length!=0){
+    fundGraph.destroy()
+    fundGraph = createChart(fgArea, fundsTotals, "Fund Growth")
+  } else{
+    fundGraph.destroy()
+    fundGraph = createChart(fgArea, [0], "Fund Growth")
+  }
+
+  if(sharesTotals.length!=0){
+    shareGraph.destroy()
+    shareGraph = createChart(sgArea, sharesTotals, "Share Growth")
+  } else {
+    shareGraph.destroy()
+    shareGraph = createChart(sgArea, [0], "Share Growth")
+  }
+
+
   console.log(computedData);
   return computedData;
 }

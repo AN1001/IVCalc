@@ -373,7 +373,7 @@ body{
   font-size: 1.2em;
   
   display: flex;
-  background: none;
+  background: var(--col1);
   border-top: 1px solid rgb(48, 48, 48);
   justify-content: space-between;
 }
@@ -523,14 +523,18 @@ body{
   margin-bottom: 10px;
 }
 
-#graph1, #graph2{
-  height: 200px;
-  background: blue;
+#graph1Holder, #graph2Holder{
+  min-height: 200px;
   flex-basis: 49%;
   min-width: 250px;
 
+  border: 1px solid var(--colBorder);
   border-radius: 0.5em;
   margin-top: 11px;
+}
+
+#graph1, #graph2{
+  height: 250px;
 }
 
 .cluster-holder{
@@ -605,7 +609,7 @@ body{
   margin: 20px 0 10px 0;
 }
 
-#filler1, #filler2{
+#filler1, #filler2, #filler3{
   height: 12px;
   border-radius: 0 0 0.25em 0.25em;
   background-image: linear-gradient(45deg, #1c1c1c 25%, #34343c 25%, #34343c 50%, #1c1c1c 50%, #1c1c1c 75%, #34343c 75%, #34343c 100%);
@@ -829,6 +833,12 @@ body{
   background-image: linear-gradient(45deg, #1c1c1c 25%, #34343c 25%, #34343c 50%, #1c1c1c 50%, #1c1c1c 75%, #34343c 75%, #34343c 100%);
   background-size: 40.00px 40.00px;
   opacity: 0.7;
+}
+
+.ex2{
+  border-radius: 0 0 0.25em 0.25em;
+  background-image: linear-gradient(45deg, #1c1c1c 25%, #34343c 25%, #34343c 50%, #1c1c1c 50%, #1c1c1c 75%, #34343c 75%, #34343c 100%);
+  background-size: 40.00px 40.00px;
 }
 
 @keyframes fadeOut {
