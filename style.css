@@ -741,12 +741,44 @@ body{
   margin-top: 3px;
 }
 
-#total1{
+#total1, #etotal{
   background: var(--col1);
   margin: -5px;
   padding: 6.5px 10px 5px 10px;
   border-radius: 0.15em 0.7em 0.15em 0.15em;
   color: yellowgreen; 
+}
+
+.normalFeesFixed{
+  margin-top: 0;
+  height: 248.5px;
+  width: 250px;
+  border-radius: 0.5em;
+  border: 1px solid var(--col2);
+}
+
+.sa{
+  width: 130px;
+  display: inline-block;
+  color: rgb(168, 168, 186);
+  text-align: center;
+  margin-top: 18.5px;
+  margin-left: 10px;
+  font-size: 0.9em;
+}
+
+.sb{
+  color: whitesmoke;
+  display: inline-block;
+  width: 100px;
+  text-align: center;
+  transform: translate(0,-10px); 
+}
+
+#source{
+  color: rgb(168,168,186);
+  font-size: 0.9em;
+  margin: 10px;
 }
 
 @keyframes fadeOut {

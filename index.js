@@ -650,7 +650,7 @@ function addBlock(el, wrapper){
     }
 
     this.firstElementChild.classList.toggle("active2");
-    fillExtraData(currentlyActive);
+    fillExtraData(currentlyActive, wrapper);
   })
 }
 
@@ -678,33 +678,48 @@ function fillContent(data, wrapper){
   fillBlocks(data, wrapper);
   blockHolder.firstElementChild.firstElementChild.classList.toggle("active2");
   currentlyActive = data[0];
-  fillExtraData(currentlyActive);
+  fillExtraData(currentlyActive, wrapper);
 }
 
-function fillExtraData(el){
-  resetExtraData()
-  document.getElementById("ExT").innerHTML = `More On ${el[1]}`
-  console.log(el)
+function fillExtraData(el, wrapper){
+  resetExtraData();
+  document.getElementById("ExT").innerHTML = `More On ${el[1]}`;
+  if(el[0].Notes){
+    document.getElementById("source").innerHTML = el[0].Notes;
+  } else {
+    document.getElementById("source").innerHTML = "No extra info";
+  }
+  
 
   if(el[2] == "Fixed Fee"){
     document.getElementById("assumptionsTable2").style.display = "block";
     document.getElementById("barChart").style.display = "flex";
+    document.getElementById("xz").style.display = "block";
     fillBarChart( [ el[0].Fee_ISA, el[0].Fee_JISA, el[0].Fee_GIA, el[0].Fee_SIPP ] );
+
+    let wrapperTo = {"isa":"Fee_ISA", "jisa":"Fee_JISA", "direct":"Fee_GIA", "sipp":"Fee_SIPP"}[wrapper];
+    document.getElementById("e1").innerHTML = "£"+el[0][wrapperTo].toLocaleString();
+    document.getElementById("e4").innerHTML = `Platform Charge For ${wrapper}`;
+    document.getElementById("e2").innerHTML = yearInput.value;
+    document.getElementById("e3").innerHTML = "£"+el[3][wrapper][1].toLocaleString();
+
+    document.getElementById("etotal").innerHTML = "£"+parseInt( parseFloat(el[0][wrapperTo])*parseInt(yearInput.value)+parseFloat(el[3][wrapper][1])).toLocaleString();
+
   } else if(el[2] == "Tiered"){
 
   }
 
-  let shares = 0
-  let funds = 0
-  let sharesTPY = 0
-  let fundsTPY = 0
+  let shares = 0;
+  let funds = 0;
+  let sharesTPY = 0;
+  let fundsTPY = 0;
   if(willInvest.checked){
-    funds = fundsNumber.value
-    fundsTPY = fundsTrades.value
+    funds = fundsNumber.value;
+    fundsTPY = fundsTrades.value;
   }
   if(willInvest2.checked){
-    shares = sharesNumber.value
-    sharesTPY = fundsTrades.value
+    shares = sharesNumber.value;
+    sharesTPY = fundsTrades.value;
   }
 
   if(el[0]["Supports_Shares"]=="Yes"){
@@ -718,24 +733,30 @@ function fillExtraData(el){
     document.getElementById("tv42").innerHTML = "£"+el[0]["Fund_Reg_Xn"].toLocaleString();
   }
 
+  let sumA = (parseFloat(el[0]["Share_Xn_Fee"])*parseFloat(shares));
   document.getElementById("c1").innerHTML = `${shares} Shares`;
   document.getElementById("c2").innerHTML = `£${ parseFloat(el[0]["Share_Xn_Fee"]).toLocaleString() }`;
-  document.getElementById("c3").innerHTML = `£${ (parseFloat(el[0]["Share_Xn_Fee"])*parseFloat(shares)).toLocaleString() }`;
+  document.getElementById("c3").innerHTML = `£${ sumA.toLocaleString() }`;
 
+  let sumB = (parseFloat(el[0]["Fund_Xn_Fee"])*parseFloat(funds));
   document.getElementById("c4").innerHTML = `${funds} Funds`;
   document.getElementById("c5").innerHTML = `£${ parseFloat(el[0]["Fund_Xn_Fee"]).toLocaleString() }`;
-  document.getElementById("c6").innerHTML = `£${ (parseFloat(el[0]["Fund_Xn_Fee"])*parseFloat(funds)).toLocaleString() }`;
+  document.getElementById("c6").innerHTML = `£${ sumB.toLocaleString() }`;
 
+  let sumC = (parseFloat(el[0]["Reg_Xn_Fee"])*parseInt(sharesTPY)*parseInt(yearInput.value));
   document.getElementById("c11").innerHTML = `£${el[0]["Reg_Xn_Fee"].toLocaleString()}/Share`;
   document.getElementById("c12").innerHTML = sharesTPY;
   document.getElementById("c13").innerHTML = yearInput.value;
-  document.getElementById("c14").innerHTML = "£"+(parseFloat(el[0]["Reg_Xn_Fee"])*parseInt(sharesTPY)*parseInt(yearInput.value)).toLocaleString();
+  document.getElementById("c14").innerHTML = "£"+sumC.toLocaleString();
 
+
+  let sumD = (parseFloat(el[0]["Fund_Reg_Xn"])*parseInt(fundsTPY)*parseInt(yearInput.value));
   document.getElementById("c15").innerHTML = `£${el[0]["Fund_Reg_Xn"].toLocaleString()}/Fund`;
   document.getElementById("c16").innerHTML = fundsTPY;
   document.getElementById("c17").innerHTML = yearInput.value;
-  document.getElementById("c18").innerHTML = "£"+(parseFloat(el[0]["Fund_Reg_Xn"])*parseInt(fundsTPY)*parseInt(yearInput.value)).toLocaleString();
+  document.getElementById("c18").innerHTML = "£"+sumD.toLocaleString();
 
+  document.getElementById("total1").innerHTML = "£"+(sumA+sumB+sumC+sumD).toLocaleString();
 
 }
 
@@ -794,7 +815,6 @@ function resetBarChart(){
     document.getElementById(barTag).style.background = "rgb(27, 42, 66)";
     document.getElementById(barTag).style.outline = "1px solid rgb(43, 128, 225)";
   })
-  
 }
 
 const extraDataZone = document.getElementById("broker-info");
