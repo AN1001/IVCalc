@@ -1,3 +1,4 @@
+//import Chart from 'chart.js/auto';
 const main = document.getElementById("main");
 
 const willInvest = document.getElementById("investChoice");
@@ -26,6 +27,11 @@ var final = 0;
 const temp = document.getElementById("mini-error");
 const popup = document.getElementById("popup");
 const divpay = document.getElementById("divpay");
+
+const ffgArea = document.getElementById("fundFeeGraph");
+const sfgArea = document.getElementById("shareFeeGraph")
+var fundFeeGraph = createChart(ffgArea, [123,23,54], "Funds Fee")
+var shareFeeGraph = createChart(sfgArea, [123,23,54], "Share Fee")
 
 var isaRankedData = [];
 var sippRankedData = [];
@@ -566,7 +572,7 @@ function tieredLoop(typeTotals, type, heldType, platform){
       return true;
     })
 
-    charges.push(charge);
+    charges.push(Math.round(charge * 100) / 100);
   })
   return charges;
 }
@@ -713,11 +719,22 @@ function fillExtraData(el, wrapper){
   } else if(el[2] == "Tiered"){
     fundsBand.style.display = "block";
     sharesBand.style.display = "block";
-    
-    let fundsTiers = el[0][wrapperTo].funds.charge
-    let sharesTiers = el[0][wrapperTo].shares.charge
 
-    let paras = document.getElementsByClassName("trueParent")
+    if(el[3][wrapper][0][1].length != 0){
+      document.getElementById("g1").style.display = "block";
+      fundFeeGraph.destroy();
+      fundFeeGraph = createChart(ffgArea, el[3][wrapper][0][1], "Funds Fees");
+    }
+    if(el[3][wrapper][0][2].length != 0){
+      document.getElementById("g2").style.display = "block";
+      shareFeeGraph.destroy();
+      shareFeeGraph = createChart(sfgArea, el[3][wrapper][0][2], "Share Fees");
+    }
+    
+    let fundsTiers = el[0][wrapperTo].funds.charge;
+    let sharesTiers = el[0][wrapperTo].shares.charge;
+
+    let paras = document.getElementsByClassName("trueParent");
 
     while(paras[0]) {
       paras[0].parentNode.removeChild(paras[0]);
@@ -758,6 +775,8 @@ function fillExtraData(el, wrapper){
 
       sharesBand.appendChild(tierEl);
     })
+
+    //createChart()
 
   }
 
@@ -880,6 +899,41 @@ function resetExtraData(){
   document.getElementById("tv33").innerHTML = "£NA";
   document.getElementById("tv41").innerHTML = "£NA";
   document.getElementById("tv42").innerHTML = "£NA";
+}
+
+
+function createChart(area, data, name){
+  var ctx = area.getContext('2d');
+  var chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: Array.from({length:data.length},(v,k)=>`Year ${k+1}`),
+      // Information about the dataset
+      datasets: [{
+        label: "Fee",
+        backgroundColor: '#1c1c1c',
+        borderColor: 'yellowgreen',
+        data: data,
+      }]
+    },
+
+    options: {
+      layout: {
+        padding: 10,
+      },
+      legend: {
+        position: 'none',
+      },
+      title: {
+        display: true,
+        text: name
+      }
+      
+    }
+  });
+
+  return chart
+
 }
 
 //platform
