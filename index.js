@@ -33,13 +33,13 @@ const divpay = document.getElementById("divpay");
 
 const ffgArea = document.getElementById("fundFeeGraph");
 const sfgArea = document.getElementById("shareFeeGraph")
-var fundFeeGraph = createChart(ffgArea, [123,23,54], "Funds Fee")
-var shareFeeGraph = createChart(sfgArea, [123,23,54], "Share Fee")
+var fundFeeGraph = createChart(ffgArea, [123,23,54], "Funds Fee");
+var shareFeeGraph = createChart(sfgArea, [123,23,54], "Share Fee");
 
 const fgArea = document.getElementById("graph1");
 const sgArea = document.getElementById("graph2")
-var fundGraph = createChart(fgArea, [123,23,54], "Fund Growth")
-var shareGraph = createChart(sgArea, [123,23,54], "Share Growth")
+var fundGraph = createChart(fgArea, [123,23,54], "Fund Growth");
+var shareGraph = createChart(sgArea, [123,23,54], "Share Growth");
 
 var isaRankedData = [];
 var sippRankedData = [];
@@ -52,7 +52,8 @@ var c2 = false;
 var c3 = false;
 var c4 = false;
 
-var currentlyActive = [{}, "Name", "Fixed Fee", {}]
+var currentlyActive = [{}, "Name", "Fixed Fee", {}];
+var isMobile = false;
 
 const header = document.getElementById("flexibleTitle");
 let btns = header.getElementsByClassName("radioBtnHolder");
@@ -61,7 +62,7 @@ for (let i = 0; i < btns.length; i++) {
     let current = document.getElementsByClassName("active");
     current[0].classList.toggle("active");
     this.classList.toggle("active");
-    fillContent(rankedDatas[this.id], ["isa","jisa","direct","sipp"][this.id])
+    fillContent(rankedDatas[this.id], ["isa","jisa","direct","sipp"][this.id]);
   });
 }
 
@@ -139,7 +140,7 @@ function simulate() {
   }
 
   if(buttonsClicked[0]){
-    buttonsClicked[0].parentElement.classList.toggle("active")
+    buttonsClicked[0].parentElement.classList.toggle("active");
   }
   buttonsClicked.forEach(function(el){
     el.parentElement.style.display = "block";
@@ -148,10 +149,16 @@ function simulate() {
   if(valid){
     let values = startSimulation();
     startRender(values);
+
+    if(isMobile){
+      results.style.display = "flex";
+      document.getElementById("sidebar").style.display = "none";
+      document.getElementById("backBtn").style.display = "block"
+    }
   } else{
-    results.style.display = "none"
-    infoSection.style.display = "none"
-    errorSection.style.display = "block"
+    results.style.display = "none";
+    infoSection.style.display = "none";
+    errorSection.style.display = "block";
   }
 }
 
@@ -392,7 +399,7 @@ async function simPlatforms(values, fundsTotals, sharesTotals, years){
       currentPlatform.push(platform.Charge_Type);
       currentPlatform.push(charges);
     } else if(platform.Charge_Type == "Tiered"){
-      charges = tieredFeeHandler(values, platform, fundsTotals, sharesTotals)
+      charges = tieredFeeHandler(values, platform, fundsTotals, sharesTotals);
       currentPlatform.push(platform.Charge_Type);
       currentPlatform.push(charges);
     }
@@ -400,19 +407,19 @@ async function simPlatforms(values, fundsTotals, sharesTotals, years){
   })
   
   if(fundsTotals.length!=0){
-    fundGraph.destroy()
-    fundGraph = createChart(fgArea, fundsTotals, "Fund Growth", "total")
+    fundGraph.destroy();
+    fundGraph = createChart(fgArea, fundsTotals, "Fund Growth", "total");
   } else{
-    fundGraph.destroy()
-    fundGraph = createChart(fgArea, [0], "Fund Growth", "total")
+    fundGraph.destroy();
+    fundGraph = createChart(fgArea, [0], "Fund Growth", "total");
   }
 
   if(sharesTotals.length!=0){
-    shareGraph.destroy()
-    shareGraph = createChart(sgArea, sharesTotals, "Share Growth", "total")
+    shareGraph.destroy();
+    shareGraph = createChart(sgArea, sharesTotals, "Share Growth", "total");
   } else {
-    shareGraph.destroy()
-    shareGraph = createChart(sgArea, [0], "Share Growth", "total")
+    shareGraph.destroy();
+    shareGraph = createChart(sgArea, [0], "Share Growth", "total");
   }
 
 
@@ -424,7 +431,7 @@ function fixedFeeHandler(years, platform, values, fundsTotals, sharesTotals, isS
   charges = {isa:[],jisa:[],direct:[],sipp:[]};
   let constCharge = [];
 
-  divRe = platform["Share_DivInvest"] * Math.floor(values[5]*(divpay.value/100)) * years
+  divRe = platform["Share_DivInvest"] * Math.floor(values[5]*(divpay.value/100)) * years;
   constCharge.push(divRe);
 
   //initial buy in = cost * funds/shares held
@@ -479,7 +486,7 @@ function fixedFeeHandler(years, platform, values, fundsTotals, sharesTotals, isS
 
     charges.sipp = thisCharge;
   } else if(sippBtn.checked && isSpecial){
-    charge = []
+    charge = [];
     if (willInvest.checked && willInvest2.checked){
       for(let i=0; i<fundsTotals.length; i++){
         if(fundsTotals[i]+sharesTotals[i]<50000){
@@ -990,4 +997,37 @@ function createChart(area, data, name, tag){
 
 }
 
-//platform
+document.getElementById("backBtn").addEventListener("click", function(){
+  results.style.display = "none";
+  document.getElementById("sidebar").style.display = "block";
+  this.style.display = "none";
+})
+
+const assumptionsTable = document.getElementById("assumptionsTable")
+const brokerInfo = document.getElementById("broker-info")
+if(window.innerWidth<=910){
+  isMobile = true;
+  mobileChange();
+}
+
+function mobileChange(){
+  results.style.display = "flex"
+
+
+  let scale = Math.min( (window.innerWidth-10)/(510+10), 1 );
+  mgt = -(assumptionsTable.clientHeight - assumptionsTable.clientHeight*scale) + 20;
+  assumptionsTable.style.transform = `scale(${scale})`;
+
+  console.log(mgt);
+
+  
+  brokerInfo.style.transform = `scale(${scale})`;
+  
+
+  document.getElementById("flexibleTitle").style.marginTop = mgt+"px";
+
+
+  results.style.display = "none"
+}
+
+//Created by Arnav Nagpure

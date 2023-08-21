@@ -13,6 +13,23 @@ body{
   background: var(--col1);
 }
 
+#backBtn{
+  position: absolute;
+  margin: 30px;
+  width: 30px;
+  height: 30px;
+  fill: white;
+
+  display: none;
+  animation: fadeIn 1s;
+}
+
+#info{
+  overflow-y: scroll;
+  max-height: calc(100vh - 20px);
+  animation: fadeIn 1s;
+}
+
 #info-bar{
   display: flex;
   align-items: center;
@@ -42,6 +59,7 @@ body{
 
 #error{
   display: none;
+  animation: fadeIn 1s;
 }
 
 #error-holder{
@@ -117,6 +135,7 @@ body{
   top: 0;
   width: 250px;
   border-radius: 0.5em;
+  animation: fadeIn 1s;
 }
 
 .sidebar-title {
@@ -307,6 +326,7 @@ body{
   background: var(--col1);
   padding: 5px;
   border-radius: 0.25em;
+  animation: fadeIn 1s;
 }
 
 .error-content{
@@ -344,6 +364,8 @@ body{
   background: var(--col2);
   border: 1px solid var(--colBorder);
   border-radius: 0.5em;
+
+  animation: fadeIn 1s;
 }
 
 #popup-title{
@@ -413,6 +435,8 @@ body{
 
   min-width: 1030px;
   max-width: 1030px;
+
+  animation: fadeIn 1s;
 }
 
 .results-title{
@@ -928,6 +952,67 @@ body{
   }
 }
 
+@media only screen and (max-width: 910px) {
+  html{
+    overflow: hidden;
+  }
+  #info{
+    display: none;
+  }
+  #main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #sidebar{
+    padding: 0;
+    max-height: calc(100vh - 105px);
+    padding-bottom: 15px;
+  }
+  #top-bar{
+    margin: 0;
+    justify-content: center;
+  }
+  .sidebar-title{
+    display: none;
+  }
+  #results{
+    padding: 1px;
+    overflow-x: hidden;
+  }
+  #assumptionsTable, #broker-info{
+    transform-origin: left top;
+  }
+  #total-earned-block, #lowest-charge-platform, #lowest-charge-block{
+    margin-right: 0;
+  }
+  #summary-blocks-holder{
+    flex-direction: column;
+  }
+
+  #flexibleTitle, #summary-blocks-holder, #broker-blocks-holder{
+    max-width: calc(100vw - 20px);
+  }
+  #broker-block-hints{
+    flex-direction: column;
+  }
+  .extra-title{
+    font-size: 1em;
+    max-width: calc(100vw - 20px);
+    text-align: center
+  }
+  #popup{
+    transform: scale(0.8)
+  }
+  #runBtn{
+    margin-bottom: 10px;
+  }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
 
 @keyframes fadeOut {
   from {opacity: 1;}
