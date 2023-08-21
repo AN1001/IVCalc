@@ -968,6 +968,9 @@ body{
     padding: 0;
     max-height: calc(100vh - 105px);
     padding-bottom: 15px;
+
+    width: calc(100vw - 50px);
+    font-size: 1.1em;
   }
   #top-bar{
     margin: 0;
