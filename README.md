@@ -1,4 +1,5 @@
-<img width="100%" alt="Screenshot 2023-08-21 at 17 56 58" src="https://github.com/AN1001/IVCalc/assets/81749717/1ac29d4f-3314-4863-913f-3544fcb56a56">
+<img width="100%" alt="Screenshot 2023-08-21 at 17 56 58" src="https://github.com/AN1001/IVCalc/assets/81749717/9fca4a9e-294d-4340-8165-4026f22b0fff">
+
 
 Wrapper and Investment platform comparer, Investment insight and analysis, Ranks Platforms and gives lowest cost platform. Website : https://ivcalc.pages.dev
 
@@ -9,6 +10,7 @@ With IV Calc you can not only compare different investment platforms, but also s
 This website includes line graphs using the library chart.js and is built without any other dependencies or frameworks.
 IV Calc also supports 4 wrappers (ISA, JISA, GIA/Direct, SIPP), as well as both shares/stocks and funds as seperate componenents
 
-<img width="100%" alt="Screenshot 2023-08-21 at 17 54 45" src="https://github.com/AN1001/IVCalc/assets/81749717/773f69d2-8865-427b-8a4a-e7c08460a08f">
+
+<img width="100%" alt="Screenshot 2023-08-21 at 17 54 45" src="https://github.com/AN1001/IVCalc/assets/81749717/47eaa2d4-f8fe-495c-8868-f4be5c663c08">
 
 <h3>Created by Arnav Nagpure (AN1001)</h3>
