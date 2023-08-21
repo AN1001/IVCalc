@@ -13,6 +13,78 @@ body{
   background: var(--col1);
 }
 
+#info-bar{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 3em;
+}
+
+.mgb15{
+  margin-bottom: 15px;
+}
+
+#info-bar-holder{
+  width: calc(100vw - 470px);
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  color: whitesmoke;
+  background: url(background.jpg);
+  background-size: 1200px 400px;
+  background-position: center;
+  margin: 100px;
+  margin-bottom: 50px;
+  margin-top: 50px;
+  background-repeat: no-repeat;
+  border-radius: 0.25em;
+}
+
+#error{
+  display: none;
+}
+
+#error-holder{
+  width: calc(100vw - 270px);
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  color: whitesmoke;
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+
+#erCapsule{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#text-holder{
+  margin: 10px 10px 10px 100px;
+  width: calc(100vw - 470px);
+}
+
+.text{
+  color: whitesmoke;
+  margin-top: 10px;
+  font-family: BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-sans;
+  font-weight: 350;
+}
+
+#creator {
+  -webkit-background-clip: text;
+          background-clip: text;
+  background-image: -webkit-gradient(linear, left top, right top, from(#09f1b8), color-stop(#00a2ff), color-stop(#ff00d2), to(#fed90f));
+  background-image: -o-linear-gradient(left, #00a2ff, #ff00d2, #fed90f);
+  background-image: linear-gradient(to right, #00a2ff, #ff00d2, #fed90f);
+
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+
+}
+
 #logo{
   width: 10px;
   height: 10px;
@@ -329,15 +401,18 @@ body{
 }
 
 #results{
-  display: flex;
+  display: none;
   align-items: stretch;
   flex-direction: column;
   padding: 60px;
   padding-top: 25px;
-  width: calc(100% - 375px);
+  margin: auto;
 
   height: calc(100vh - 105px);
   overflow-y: scroll;
+
+  min-width: 1030px;
+  max-width: 1030px;
 }
 
 .results-title{
@@ -549,10 +624,10 @@ body{
 }
 
 #broker-info{
-  min-height: 300px;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-bottom: 15px;
 }
 
 #mgt0{
@@ -833,6 +908,24 @@ body{
   background-image: linear-gradient(45deg, #1c1c1c 25%, #34343c 25%, #34343c 50%, #1c1c1c 50%, #1c1c1c 75%, #34343c 75%, #34343c 100%);
   background-size: 40.00px 40.00px;
   opacity: 0.7;
+}
+
+.results-mini-subtitle{
+  color: rgb(68,68,86);
+}
+
+@media only screen and (max-width: 1426px) {
+  #results{
+    min-width: 770px;
+    max-width: 770px;
+  }
+}
+
+@media only screen and (max-width: 1158px) {
+  #results{
+    min-width: 510px;
+    max-width: 510px;
+  }
 }
 
 

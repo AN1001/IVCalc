@@ -1,5 +1,8 @@
 //import Chart from 'chart.js/auto';
 const main = document.getElementById("main");
+const results = document.getElementById("results");
+const infoSection = document.getElementById("info");
+const errorSection = document.getElementById("error");
 
 const willInvest = document.getElementById("investChoice");
 const investForm = document.getElementById("formContainer");
@@ -145,6 +148,10 @@ function simulate() {
   if(valid){
     let values = startSimulation();
     startRender(values);
+  } else{
+    results.style.display = "none"
+    infoSection.style.display = "none"
+    errorSection.style.display = "block"
   }
 }
 
@@ -600,6 +607,9 @@ function tieredLoop(typeTotals, type, heldType, platform){
 }
 
 async function startRender(data){
+  results.style.display = "flex"
+  infoSection.style.display = "none"
+  errorSection.style.display = "none"
   data = await data;
 
   isaRankedData = filterData(data, "isa" ).toSorted(getSorter("isa"));
@@ -723,13 +733,13 @@ function fillExtraData(el, wrapper){
   }
   
   let wrapperTo = {"isa":"Fee_ISA", "jisa":"Fee_JISA", "direct":"Fee_GIA", "sipp":"Fee_SIPP"}[wrapper];
-  if(el[2] == "Fixed Fee"){
+  if(el[2] == "Fixed Fee" || (el[2] == "Fixed Fee Special" && wrapper!="sipp") ){
     document.getElementById("assumptionsTable2").style.display = "block";
     document.getElementById("barChart").style.display = "flex";
     document.getElementById("xz").style.display = "block";
     document.getElementById("fillerSec").style.display = "block";
     
-    fillBarChart( [ el[0].Fee_ISA, el[0].Fee_JISA, el[0].Fee_GIA, el[0].Fee_SIPP ] );
+    fillBarChart( [ el[0].Fee_ISA, el[0].Fee_JISA, el[0].Fee_GIA, el[0].Fee_SIPP ], el[2] == "Fixed Fee Special" );
 
     document.getElementById("e1").innerHTML = "£"+el[0][wrapperTo].toLocaleString();
     document.getElementById("e4").innerHTML = `Platform Charge For ${wrapper}`;
@@ -854,12 +864,17 @@ function fillExtraData(el, wrapper){
 }
 
 const maxBarHeight = 180;
-function fillBarChart(wrappers){
+function fillBarChart(wrappers, isSpecial){
   resetBarChart();
   document.getElementById("tv21").innerHTML = "£"+wrappers[0].toLocaleString();
   document.getElementById("tv22").innerHTML = "£"+wrappers[1].toLocaleString();
   document.getElementById("tv23").innerHTML = "£"+wrappers[2].toLocaleString();
-  document.getElementById("tv24").innerHTML = "£"+wrappers[3].toLocaleString();
+
+  if(!isSpecial){
+    document.getElementById("tv24").innerHTML = "£"+wrappers[3].toLocaleString();
+  } else {
+    document.getElementById("tv24").innerHTML = "Check Extra Info"
+  }
 
   curMax = 0;
   wrappers.forEach(function(el){
