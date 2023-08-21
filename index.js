@@ -394,18 +394,18 @@ async function simPlatforms(values, fundsTotals, sharesTotals, years){
   
   if(fundsTotals.length!=0){
     fundGraph.destroy()
-    fundGraph = createChart(fgArea, fundsTotals, "Fund Growth")
+    fundGraph = createChart(fgArea, fundsTotals, "Fund Growth", "total")
   } else{
     fundGraph.destroy()
-    fundGraph = createChart(fgArea, [0], "Fund Growth")
+    fundGraph = createChart(fgArea, [0], "Fund Growth", "total")
   }
 
   if(sharesTotals.length!=0){
     shareGraph.destroy()
-    shareGraph = createChart(sgArea, sharesTotals, "Share Growth")
+    shareGraph = createChart(sgArea, sharesTotals, "Share Growth", "total")
   } else {
     shareGraph.destroy()
-    shareGraph = createChart(sgArea, [0], "Share Growth")
+    shareGraph = createChart(sgArea, [0], "Share Growth", "total")
   }
 
 
@@ -745,12 +745,12 @@ function fillExtraData(el, wrapper){
     if(el[3][wrapper][0][1].length != 0){
       document.getElementById("g1").style.display = "block";
       fundFeeGraph.destroy();
-      fundFeeGraph = createChart(ffgArea, el[3][wrapper][0][1], "Funds Fees");
+      fundFeeGraph = createChart(ffgArea, el[3][wrapper][0][1], "Funds Fees", "Fee");
     }
     if(el[3][wrapper][0][2].length != 0){
       document.getElementById("g2").style.display = "block";
       shareFeeGraph.destroy();
-      shareFeeGraph = createChart(sfgArea, el[3][wrapper][0][2], "Share Fees");
+      shareFeeGraph = createChart(sfgArea, el[3][wrapper][0][2], "Share Fees", "Fee");
     }
     
     let fundsTiers = el[0][wrapperTo].funds.charge;
@@ -924,7 +924,7 @@ function resetExtraData(){
 }
 
 
-function createChart(area, data, name){
+function createChart(area, data, name, tag){
   var ctx = area.getContext('2d');
   var chart = new Chart(ctx, {
     type: 'line',
@@ -932,10 +932,11 @@ function createChart(area, data, name){
       labels: Array.from({length:data.length},(v,k)=>`Year ${k+1}`),
       // Information about the dataset
       datasets: [{
-        label: "Fee",
+        label: tag,
         backgroundColor: '#1c1c1c',
         borderColor: 'yellowgreen',
         data: data,
+        fill: false
       }]
     },
 
@@ -949,8 +950,24 @@ function createChart(area, data, name){
       title: {
         display: true,
         text: name
+      },
+      maintainAspectRatio: false,
+      scales: {
+        xAxes: [{
+          ticks: {
+            display: false
+          }
+        }],
+        yAxes: [
+          {
+            ticks: {
+              callback: (label, index, labels) => {
+                return "£"+parseInt(label).toLocaleString();
+              }
+            }
+          }
+        ]
       }
-      
     }
   });
 

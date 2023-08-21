@@ -835,11 +835,6 @@ body{
   opacity: 0.7;
 }
 
-.ex2{
-  border-radius: 0 0 0.25em 0.25em;
-  background-image: linear-gradient(45deg, #1c1c1c 25%, #34343c 25%, #34343c 50%, #1c1c1c 50%, #1c1c1c 75%, #34343c 75%, #34343c 100%);
-  background-size: 40.00px 40.00px;
-}
 
 @keyframes fadeOut {
   from {opacity: 1;}
