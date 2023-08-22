@@ -1062,6 +1062,7 @@ a{
 
     width: calc(100vw - 50px);
     font-size: 1.1em;
+    margin-left: 0;
   }
   #top-bar{
     margin: 0;
@@ -1096,7 +1097,8 @@ a{
     text-align: center
   }
   #popup{
-    transform: scale(0.8)
+    width: auto;
+    margin: 10px;
   }
   #runBtn{
     margin-bottom: 10px;
