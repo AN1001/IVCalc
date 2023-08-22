@@ -54,7 +54,6 @@ body{
   display: flex;
   justify-content: center;
   color: whitesmoke;
-  background: url(background.jpg);
   background-size: 1200px 400px;
   background-position: center;
   margin: 100px;
@@ -88,13 +87,16 @@ body{
 #text-holder{
   margin: 10px 10px 10px 100px;
   width: calc(100vw - 570px);
+  padding-bottom: 20px;
 }
 
 .text{
-  color: whitesmoke;
-  margin-top: 10px;
-  font-family: BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-sans;
-  font-weight: 350;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  color: #dedde6;
+  line-height: 28px;
+  font-size: 16px;
+  font-weight: 300;
+  margin: 10px 0 10px 0;
 }
 
 #creator {
@@ -108,6 +110,10 @@ body{
   -webkit-background-clip: text;
   background-clip: text;
 
+}
+
+a{
+  color: rgb(43, 128, 255);
 }
 
 #logo{
@@ -366,15 +372,19 @@ body{
 #popup{
   width: 400px;
   display: none;
-  position: fixed;
-  bottom: calc(50% - 100px);
-  right: calc(50% - 200px);
-  
-  background: var(--col2);
+  position: absolute;
+  background: rgb(32, 32, 37);
   border: 1px solid var(--colBorder);
   border-radius: 0.5em;
-
   animation: fadeIn 1s;
+  padding: 20px;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  height: fit-content;
 }
 
 #popup-title{
@@ -402,7 +412,7 @@ body{
 
 .small-content{
   color: rgb(211, 211, 235);
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 #closeBtn{
@@ -416,7 +426,7 @@ body{
 }
 
 #title-content{
-  padding-left: 5px;
+  font-size: 1.7em;
 }
 
 #closeBtn:hover{
@@ -450,7 +460,9 @@ body{
 
 .results-title{
   color: white;
-  font-size: 2em;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 1.875rem;
+  font-weight: 800;
 }
 
 #resultsSubtitle{
@@ -484,6 +496,24 @@ body{
   background: var(--col1);
   border-top: 1px solid rgb(48, 48, 48);
   justify-content: space-between;
+  align-items: center;
+}
+
+.an2{
+  text-align: right;
+}
+
+.an3{
+  font-size: 0.9em;
+  text-align: right;
+}
+
+.cols :first-child{
+  color: #9a9a9a;
+}
+
+.cols :last-child{
+  color: #6b6b6b;
 }
 
 .at-title{
@@ -959,6 +989,9 @@ body{
     min-width: 510px;
     max-width: 510px;
   }
+  .cluster-holder{
+    display: block;
+  }
 }
 
 @media only screen and (max-width: 1010px) {
@@ -1028,5 +1061,5 @@ body{
 
 @keyframes fadeOut {
   from {opacity: 1;}
-  to {opacity: 0.1;}
+  to {opacity: 0.05;}
 }

@@ -36,10 +36,8 @@ const sfgArea = document.getElementById("shareFeeGraph")
 var fundFeeGraph = createChart(ffgArea, [123,23,54], "Funds Fee");
 var shareFeeGraph = createChart(sfgArea, [123,23,54], "Share Fee");
 
-const fgArea = document.getElementById("graph1");
-const sgArea = document.getElementById("graph2")
-var fundGraph = createChart(fgArea, [123,23,54], "Fund Growth");
-var shareGraph = createChart(sgArea, [123,23,54], "Share Growth");
+const portfolioGraphArea = document.getElementById("graph1");
+var portfolioGraph = createChart(portfolioGraphArea, [0], "Portfolio Growth", "Total");
 
 var isaRankedData = [];
 var sippRankedData = [];
@@ -406,20 +404,21 @@ async function simPlatforms(values, fundsTotals, sharesTotals, years){
     computedData.push(currentPlatform);
   })
   
-  if(fundsTotals.length!=0){
-    fundGraph.destroy();
-    fundGraph = createChart(fgArea, fundsTotals, "Fund Growth", "total");
-  } else{
-    fundGraph.destroy();
-    fundGraph = createChart(fgArea, [0], "Fund Growth", "total");
-  }
+  portfolioGraph.destroy();
 
-  if(sharesTotals.length!=0){
-    shareGraph.destroy();
-    shareGraph = createChart(sgArea, sharesTotals, "Share Growth", "total");
+  if(fundsTotals.length!=0 && sharesTotals.length!=0){
+    let sumarr = []
+    for(let i=0; i<fundsTotals.length; i++){
+      sumarr.push(fundsTotals[i]+sharesTotals[i])
+    }
+    portfolioGraph = createChart(portfolioGraphArea, sumarr, "Portfolio Growth", "Total");
+
   } else {
-    shareGraph.destroy();
-    shareGraph = createChart(sgArea, [0], "Share Growth", "total");
+    if(fundsTotals.length!=0){
+      portfolioGraph = createChart(portfolioGraphArea, fundsTotals, "Portfolio Growth", "Total");
+    } else {
+      portfolioGraph = createChart(portfolioGraphArea, sharesTotals, "Portfolio Growth", "Total");
+    }
   }
 
 
@@ -1019,17 +1018,15 @@ function mobileChange(){
   let scale = Math.min( (window.innerWidth-10)/(510+10), 1 );
   mgt = -(assumptionsTable.clientHeight - assumptionsTable.clientHeight*scale) + 20;
   assumptionsTable.style.transform = `scale(${scale})`;
-
-  console.log(mgt);
-
   
+
   brokerInfo.style.transform = `scale(${scale})`;
   
 
   document.getElementById("flexibleTitle").style.marginTop = mgt+"px";
 
 
-  results.style.display = "none"
+  results.style.display = "none";
 }
 
 //Created by Arnav Nagpure
