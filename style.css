@@ -74,7 +74,7 @@ body{
 }
 
 #error-holder{
-  width: calc(100vw - 270px);
+  width: calc(100vw - 370px);
   height: 100px;
   display: flex;
   justify-content: center;
