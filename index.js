@@ -829,7 +829,7 @@ function fillExtraData(el, wrapper){
   }
   if(willInvest2.checked){
     shares = sharesNumber.value;
-    sharesTPY = fundsTrades.value;
+    sharesTPY = sharesTrades.value;
   }
 
   if(el[0]["Supports_Shares"]=="Yes"){
@@ -997,6 +997,8 @@ function createChart(area, data, name, tag){
 
 }
 
+
+
 document.getElementById("backBtn").addEventListener("click", function(){
   results.style.display = "none";
   document.getElementById("sidebar").style.display = "block";
@@ -1005,7 +1007,7 @@ document.getElementById("backBtn").addEventListener("click", function(){
 
 const assumptionsTable = document.getElementById("assumptionsTable")
 const brokerInfo = document.getElementById("broker-info")
-if(window.innerWidth<=910){
+if(window.innerWidth<=1010){
   isMobile = true;
   mobileChange();
 }

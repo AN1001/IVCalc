@@ -13,6 +13,13 @@ body{
   background: var(--col1);
 }
 
+#beta{
+  position: absolute;
+  margin: 41px 0 0 132px;
+  font-size: 0.9em;
+  color: rgb(43, 128, 255);
+}
+
 #backBtn{
   position: absolute;
   margin: 30px;
@@ -42,7 +49,7 @@ body{
 }
 
 #info-bar-holder{
-  width: calc(100vw - 470px);
+  width: calc(100vw - 570px);
   height: 100px;
   display: flex;
   justify-content: center;
@@ -80,7 +87,7 @@ body{
 
 #text-holder{
   margin: 10px 10px 10px 100px;
-  width: calc(100vw - 470px);
+  width: calc(100vw - 570px);
 }
 
 .text{
@@ -117,7 +124,7 @@ body{
   align-items: center;
   font-size: 1.1em;
   color: #FFF; 
-  margin-left: 10px;
+  margin-left: 20px;
 }
 
 #main{
@@ -133,9 +140,11 @@ body{
   position: -webkit-sticky;
   position: sticky;
   top: 0;
-  width: 250px;
+  width: 330px;
   border-radius: 0.5em;
   animation: fadeIn 1s;
+  margin-left: 15px;
+  max-width: 400px;
 }
 
 .sidebar-title {
@@ -938,21 +947,21 @@ body{
   color: rgb(68,68,86);
 }
 
-@media only screen and (max-width: 1426px) {
+@media only screen and (max-width: 1526px) {
   #results{
     min-width: 770px;
     max-width: 770px;
   }
 }
 
-@media only screen and (max-width: 1158px) {
+@media only screen and (max-width: 1258px) {
   #results{
     min-width: 510px;
     max-width: 510px;
   }
 }
 
-@media only screen and (max-width: 910px) {
+@media only screen and (max-width: 1010px) {
   html{
     overflow: hidden;
   }
