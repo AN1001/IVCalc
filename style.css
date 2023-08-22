@@ -9,6 +9,11 @@
   font-family: 'Rubik', sans-serif;
 }
 
+.invertCol{
+  animation: toFilter 0.5s;
+  filter: invert(1);
+}
+
 body{
   background: var(--col1);
 }
@@ -258,11 +263,11 @@ a{
   position: relative;
 }
 
-.tickbox{
+.tickbox, .tickbox2{
   display: flex;
 }
 
-.ticker{
+.ticker, .ticker2{
   margin: 0;
   width: 25px;
   height: 25px;
@@ -271,9 +276,22 @@ a{
   background-color: var(--col3);
 }
 
+.ticker2{
+  transform: translateX(-45px);
+}
+
 .tickbox input {
   cursor: pointer;
   position: absolute;
+  opacity: 0;
+  width: 25px;
+  height: 25px;
+  margin: 6px -5px 0 10px;
+  z-index: 4;
+}
+
+.tickbox2 input {
+  cursor: pointer;
   opacity: 0;
   width: 25px;
   height: 25px;
@@ -294,7 +312,24 @@ a{
   z-index: 2;
 }
 
+.tick2{
+  width: 15px;
+  height: 15px;
+  margin: 11px -5px 0 15px;
+  background: rgb(70,70,80);
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 50%;
+  z-index: 2;
+  transform: translateX(-75px);
+}
+
 .tickbox input:checked ~ .tick {
+  background: rgb(43, 128, 255);
+}
+
+.tickbox2 input:checked ~ .tick2 {
   background: rgb(43, 128, 255);
 }
 
@@ -316,6 +351,20 @@ a{
 
 #YI, #returnInput{
   width: 30px;
+}
+
+.lightMode{
+  background: var(--col2);
+  border: none;
+  border-radius: 0.25em;
+  padding: 5px 15px 5px 15px;
+  color: var(--colBorder);
+  margin-top: 10px;
+  transition: color 0.5s;
+}
+
+.lightMode:hover{
+  color: beige;
 }
 
 #runBtn{
@@ -1062,4 +1111,9 @@ a{
 @keyframes fadeOut {
   from {opacity: 1;}
   to {opacity: 0.05;}
+}
+
+@keyframes toFilter{
+  from {filter: invert(0);}
+  to {filter: invert(1);}
 }

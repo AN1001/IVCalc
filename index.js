@@ -1029,4 +1029,8 @@ function mobileChange(){
   results.style.display = "none";
 }
 
+function toggleLightMode(){
+  document.documentElement.classList.toggle("invertCol");
+}
+
 //Created by Arnav Nagpure
