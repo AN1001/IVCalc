@@ -18,6 +18,20 @@ body{
   background: var(--col1);
 }
 
+#support{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 350px;
+  padding: 0px 10px;
+  margin: 30px;
+  border: 1px solid var(--colBorder);
+  color: rgb(222, 221, 230);
+  border-radius: 0.25em;
+  background: var(--col1);
+  font-size: 0.9em;
+}
+
 #beta{
   position: absolute;
   margin: 41px 0 0 132px;
