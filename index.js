@@ -782,14 +782,14 @@ function fillExtraData(el, wrapper){
       let tierEl = tierTemplate.content.cloneNode(true)
       tierEl.getElementById("f1").innerHTML = tier[1]+"%";
       if(tier[2]){
-        tierEl.getElementById("f2").innerHTML = "Min: £"+tier[2].toLocaleString();
+        tierEl.getElementById("f2").innerHTML = "Max: £"+tier[2].toLocaleString();
       } else {
-        tierEl.getElementById("f2").innerHTML = "Min: None"
+        tierEl.getElementById("f2").innerHTML = "Max: None"
       }
       if(tier[3]){
-        tierEl.getElementById("f3").innerHTML = "Max: £"+tier[3].toLocaleString();
+        tierEl.getElementById("f3").innerHTML = "Min: £"+tier[3].toLocaleString();
       } else {
-        tierEl.getElementById("f3").innerHTML = "Max: None"
+        tierEl.getElementById("f3").innerHTML = "Min: None"
       }
       tierEl.getElementById("f4").innerHTML = "Next £"+tier[0]
 
