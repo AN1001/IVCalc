@@ -114,24 +114,6 @@
    "Notes": "SIPP fee is £90 for under 50k or £180 over 50k. No charge on International shares but 1.25% forex. Dividend reinvestment costs 2% of the transaction value but capped at £9.5. For the purpose of calculations £9.5 is used"
 },
 {
-   "Platform_Name": "Bestinvest",
-   "ChoiceOfInvestments": "Regular",
-   "Support_Funds": "Yes",
-   "Supports_Shares": "Yes",
-   "Charge_Type": "Tiered",
-   "Supports": "GIA,ISA,SIPP,JISA",
-   "Fee_GIA": {"shares":{"charge":[[250000,0.40],[500000,0.20],[1000000,0.10],["Infinity",0]]},"funds":{"charge":[[250000,0.40,120],[500000,0.20],[1000000,0.10],["Infinity",0]]}},
-   "Fee_ISA": {"shares":{"charge":[[250000,0.40],[500000,0.20],[1000000,0.10],["Infinity",0]]},"funds":{"charge":[[250000,0.40],[500000,0.20],[1000000,0.10],["Infinity",0]]}},
-   "Fee_SIPP": {"shares":{"charge":[[250000,0.40],[500000,0.20],[1000000,0.10],["Infinity",0]]},"funds":{"charge":[[250000,0.40,0,120],[500000,0.20],[1000000,0.10],["Infinity",0]]}},
-   "Additional_SIPP_Fee": 0,
-   "Fee_JISA": {"shares":{"charge":[[250000,0.40,120],[500000,0.20,90],[1000000,0.10],["Infinity",0]]},"funds":{"charge":[[250000,0.40,120],[500000,0.20,90],[1000000,0.10],["Infinity",0]]}},
-   "Fund_Xn_Fee": 0,
-   "Fund_Reg_Xn": 0,
-   "Share_DivInvest": 0,
-   "Share_Xn_Fee": 4.95,
-   "Reg_Xn_Fee": 0
- },
- {
   "Platform_Name": "Fidelity",
   "ChoiceOfInvestments": "Regular",
   "Support_Funds": "Yes",

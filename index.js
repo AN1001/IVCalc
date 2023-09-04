@@ -592,15 +592,23 @@ function tieredLoop(typeTotals, type, heldType, platform){
         cur = cur-band[0];
       } else {
         curCharge+=cur*(band[1]/100);
+
+        let max = band[2]
+        if(max<curCharge){
+          curCharge = max;
+        }
         charge+=curCharge;
         return false;
       }
-
-      if(band[2]>curCharge){
-        curCharge = band[2];
+/*
+      min = band[3]
+      if(min>curCharge){
+        curCharge = min;
       }
-      if(band[3]<curCharge){
-        curCharge = band[3];
+*/
+      max = band[2]
+      if(max<curCharge){
+        curCharge = max;
       }
       charge+=curCharge;
 
@@ -782,14 +790,14 @@ function fillExtraData(el, wrapper){
       let tierEl = tierTemplate.content.cloneNode(true)
       tierEl.getElementById("f1").innerHTML = tier[1]+"%";
       if(tier[2]){
-        tierEl.getElementById("f2").innerHTML = "Min: £"+tier[2].toLocaleString();
+        tierEl.getElementById("f2").innerHTML = "Max: £"+tier[2].toLocaleString();
       } else {
-        tierEl.getElementById("f2").innerHTML = "Min: None"
+        tierEl.getElementById("f2").innerHTML = "Max: None"
       }
       if(tier[3]){
-        tierEl.getElementById("f3").innerHTML = "Max: £"+tier[3].toLocaleString();
+        tierEl.getElementById("f3").innerHTML = "Min: £"+tier[3].toLocaleString();
       } else {
-        tierEl.getElementById("f3").innerHTML = "Max: None"
+        tierEl.getElementById("f3").innerHTML = "Min: None"
       }
       tierEl.getElementById("f4").innerHTML = "Next £"+tier[0]
 
@@ -800,14 +808,14 @@ function fillExtraData(el, wrapper){
       let tierEl = tierTemplate.content.cloneNode(true)
       tierEl.getElementById("f1").innerHTML = tier[1]+"%";
       if(tier[2]){
-        tierEl.getElementById("f2").innerHTML = "Min: £"+tier[2].toLocaleString();
+        tierEl.getElementById("f2").innerHTML = "Max: £"+tier[2].toLocaleString();
       } else {
-        tierEl.getElementById("f2").innerHTML = "Min: None"
+        tierEl.getElementById("f2").innerHTML = "Max: None"
       }
       if(tier[3]){
-        tierEl.getElementById("f3").innerHTML = "Max: £"+tier[3].toLocaleString();
+        tierEl.getElementById("f3").innerHTML = "Min: £"+tier[3].toLocaleString();
       } else {
-        tierEl.getElementById("f3").innerHTML = "Max: None"
+        tierEl.getElementById("f3").innerHTML = "Min: None"
       }
       tierEl.getElementById("f4").innerHTML = "Next £"+tier[0]
 
@@ -1032,5 +1040,27 @@ function mobileChange(){
 function toggleLightMode(){
   document.documentElement.classList.toggle("invertCol");
 }
+
+/* 
+,
+{
+   "Platform_Name": "Bestinvest",
+   "ChoiceOfInvestments": "Regular",
+   "Support_Funds": "Yes",
+   "Supports_Shares": "Yes",
+   "Charge_Type": "Tiered",
+   "Supports": "GIA,ISA,SIPP,JISA",
+   "Fee_GIA": {"shares":{"charge":[[250000,0.40],[500000,0.20],[1000000,0.10],["Infinity",0]]},"funds":{"charge":[[250000,0.40,120],[500000,0.20],[1000000,0.10],["Infinity",0]]}},
+   "Fee_ISA": {"shares":{"charge":[[250000,0.40],[500000,0.20],[1000000,0.10],["Infinity",0]]},"funds":{"charge":[[250000,0.40],[500000,0.20],[1000000,0.10],["Infinity",0]]}},
+   "Fee_SIPP": {"shares":{"charge":[[250000,0.40],[500000,0.20],[1000000,0.10],["Infinity",0]]},"funds":{"charge":[[250000,0.40,null,120],[500000,0.20],[1000000,0.10],["Infinity",0]]}},
+   "Additional_SIPP_Fee": 0,
+   "Fee_JISA": {"shares":{"charge":[[250000,0.40,120],[500000,0.20,90],[1000000,0.10],["Infinity",0]]},"funds":{"charge":[[250000,0.40,120],[500000,0.20,90],[1000000,0.10],["Infinity",0]]}},
+   "Fund_Xn_Fee": 0,
+   "Fund_Reg_Xn": 0,
+   "Share_DivInvest": 0,
+   "Share_Xn_Fee": 4.95,
+   "Reg_Xn_Fee": 0
+ }
+*/
 
 //Created by Arnav Nagpure
