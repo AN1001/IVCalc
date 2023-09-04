@@ -596,11 +596,11 @@ function tieredLoop(typeTotals, type, heldType, platform){
         return false;
       }
 
-      if(band[3]>curCharge){
-        curCharge = band[3];
-      }
-      if(band[2]<curCharge){
+      if(band[2]>curCharge){
         curCharge = band[2];
+      }
+      if(band[3]<curCharge){
+        curCharge = band[3];
       }
       charge+=curCharge;
 
