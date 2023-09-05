@@ -11,7 +11,7 @@
 
 .invertCol{
   animation: toFilter 0.5s;
-  filter: invert(1);
+  filter: invert(0);
 }
 
 body{
