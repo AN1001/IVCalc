@@ -217,7 +217,7 @@ function startSimulation(){
     fillTable(values, "shares");
   }
 
-  return simPlatforms(values, fundsTotals, sharesTotals, years);
+  return simPlatforms(values, fundsTotals, sharesTotals, years, fullTotal>50000);
 
   
   //console.log([years,interestRate,fundsTotal,fundsMonthlyAddition,sharesTotal,sharesMonthlyAddition]);
@@ -365,14 +365,16 @@ function fillTable(values, tables){
 // fundsInitial.value, fundNumber, fundsMonthlyAddition, fundTrades, sharesInitial.value, shareNumber, sharesMonthlyAddition, shareTrades
  
 
-async function simPlatforms(values, fundsTotals, sharesTotals, years){
+async function simPlatforms(values, fundsTotals, sharesTotals, years, over50k){
   const computedData = [];
   const response = await fetch('./platforms.json');
   let rawData = await response.json();
   let newarr = [];
 
   for(let i=0; i<rawData.length; i++){
-    if (willInvest2.checked && willInvest.checked){
+    if(rawData[i].Platform_Name=="Interactive Investor (Investor Essential)" && over50k){
+      //II (I Essential) does not support accounts over £50k
+    } else if (willInvest2.checked && willInvest.checked){
       if(rawData[i]["Support_Funds"] == "Yes" && rawData[i]["Supports_Shares"] == "Yes"){
         newarr.push(rawData[i]);
       }
