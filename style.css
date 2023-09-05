@@ -5,7 +5,7 @@
   --col2: #34343c;
   --col1: #1c1c1c;
   --colBorder: #4d4d58;
-  
+
   font-family: 'Rubik', sans-serif;
 }
 
@@ -1111,7 +1111,7 @@ a{
     margin: 10px;
   }
   #runBtn{
-    margin-bottom: 10px;
+    margin-bottom: 90px;
   }
 }
 
