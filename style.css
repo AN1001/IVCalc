@@ -707,6 +707,7 @@ a{
   width: 66px;
   height: 32px;
   border: 1px solid rgb(43, 128, 255);
+  background: rgb(43, 128, 255);
   line-height: 34px;
 }
 
