@@ -466,5 +466,21 @@
   "Share_Xn_Fee": 0,
   "Reg_Xn_Fee": 0,
   "Notes": "Only offer built in Portfolios and Fees include fund charges too"
+ },
+ {
+  "Platform_Name": "HSBC",
+  "ChoiceOfInvestments": "Restricted",
+  "Support_Funds": "Yes",
+  "Supports_Shares": "No",
+  "Charge_Type": "Tiered",
+  "Supports": "GIA,ISA",
+  "Fee_GIA": {"funds":{"charge":[["Infinity",0.25]]}},
+  "Fee_ISA": {"funds":{"charge":[["Infinity",0.25]]}},
+  "Fund_Xn_Fee": 0,
+  "Fund_Reg_Xn": 0,
+  "Share_DivInvest": 0,
+  "Share_Xn_Fee": 0,
+  "Reg_Xn_Fee": 0,
+  "Notes": "Requires HSBC Bank Account"
  }
 ]
