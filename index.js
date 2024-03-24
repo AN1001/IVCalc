@@ -297,49 +297,60 @@ function verifyInputs(group){
 
 const popupTitle = document.getElementById("title-content");
 const popupContent = document.getElementById("popup-content");
+var clickable = true;
 
 function wrapperInfo(){
-  usePopup()
-  popupTitle.innerHTML = "Wrappers";
-  document.getElementById("pca").style.display = "block";
-  document.getElementById("pcb").style.display = "none";
-  document.getElementById("pcc").style.display = "none";
-  document.getElementById("pcd").style.display = "none";
+  if(clickable){
+    usePopup()
+    popupTitle.innerHTML = "Wrappers";
+    document.getElementById("pca").style.display = "block";
+    document.getElementById("pcb").style.display = "none";
+    document.getElementById("pcc").style.display = "none";
+    document.getElementById("pcd").style.display = "none";
+  }
 }
 
 function fundsInfo(){
+  if(clickable){
   usePopup();
   popupTitle.innerHTML = "Funds Investment";
   document.getElementById("pca").style.display = "none";
   document.getElementById("pcb").style.display = "block";
   document.getElementById("pcc").style.display = "none";
   document.getElementById("pcd").style.display = "none";
+  }
 }
 
 function sharesInfo(){
+  if(clickable){
   usePopup();
   popupTitle.innerHTML = "Shares Investment";
   document.getElementById("pca").style.display = "none";
   document.getElementById("pcb").style.display = "none";
   document.getElementById("pcc").style.display = "block";
   document.getElementById("pcd").style.display = "none";
+  }
 }
 
 function assumptionInfo(){
+  if(clickable){
   usePopup();
   popupTitle.innerHTML = "Assumptions";
   document.getElementById("pca").style.display = "none";
   document.getElementById("pcb").style.display = "none";
   document.getElementById("pcc").style.display = "none";
   document.getElementById("pcd").style.display = "block";
+  }
 }
 
 function usePopup(){
+  clickable = false;
   popup.style.display = "block";
   main.classList.toggle("fadeOutClass");
 }
 
 function closePopup(){
+  clickable = true;
   popup.style.display = "none";
   main.classList.toggle("fadeOutClass");
 }
