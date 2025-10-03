@@ -1,5 +1,6 @@
 <img width="100%" alt="Screenshot 2023-08-21 at 17 56 58" src="https://github.com/AN1001/IVCalc/assets/81749717/9fca4a9e-294d-4340-8165-4026f22b0fff">
 
+# Important! - This is just a demo project to practice computer science - please do not use for actual financial advice
 
 Wrapper and Investment platform comparer, Investment insight and analysis, Ranks Platforms and gives lowest cost platform. Website : https://ivcalc.pages.dev
 
